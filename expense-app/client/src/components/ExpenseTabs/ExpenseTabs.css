@@ -1,0 +1,180 @@
+svg {
+  cursor: pointer;
+}
+.tab-container {
+  color: #ffffff;
+}
+.tab-index {
+  position: relative;
+}
+.tab-content {
+  position: absolute;
+}
+.tab-content svg {
+  color: var(--active-color);
+}
+
+.active-border {
+  border-color: #ae8cfa;
+  color: #ae8cfa;
+}
+.tab-container button:not(:is(.active-border)) {
+  opacity: 0.4;
+  border-color: #aff7ffa3;
+}
+.tab-content ul {
+  display: flex;
+  flex-direction: row;
+}
+.animate__fadeOut {
+  visibility: hidden;
+}
+p.category {
+  position: relative;
+}
+
+p.category::before {
+  content: "";
+  height: 2.4rem;
+  width: 1px;
+  position: absolute;
+  top: 0.35rem;
+  left: -0.5rem;
+}
+p.amount {
+  color: #bab8c3;
+}
+p.description {
+  /* font-size: 0.9rem; */
+  color: #a7a2f3a1;
+}
+
+/* style of expense category text */
+p.expense-beverage {
+  color: var(--beverage-category);
+}
+p.expense-beverage::before {
+  background-color: var(--beverage-category);
+}
+p.expense-food {
+  color: var(--food-category);
+}
+p.expense-food::before {
+  background-color: var(--food-category);
+}
+p.expense-shopping {
+  color: var(--shopping-category);
+}
+p.expense-shopping::before {
+  background-color: var(--shopping-category);
+}
+p.expense-pet {
+  color: var(--pet-category);
+}
+p.expense-pet::before {
+  background-color: var(--pet-category);
+}
+p.expense-phone {
+  color: var(--phone-category);
+}
+p.expense-phone::before {
+  background-color: var(--phone-category);
+}
+p.expense-household {
+  color: var(--household-category);
+}
+p.expense-household::before {
+  background-color: var(--household-category);
+}
+p.expense-bills {
+  color: var(--bills-category);
+}
+p.expense-bills::before {
+  background-color: var(--bills-category);
+}
+p.expense-education {
+  color: var(--education-category);
+}
+p.expense-education::before {
+  background-color: var(--education-category);
+}
+p.expense-entertainment {
+  color: var(--entertainment-category);
+}
+p.expense-entertainment::before {
+  background-color: var(--entertainment-category);
+}
+p.expense-health {
+  color: var(--health-category);
+}
+p.expense-health::before {
+  background-color: var(--health-category);
+}
+p.expense-travel {
+  color: var(--travel-category);
+}
+p.expense-travel::before {
+  background-color: var(--travel-category);
+}
+p.expense-transportation {
+  color: var(--transportation-category);
+}
+p.expense-transportation::before {
+  background-color: var(--transportation-category);
+}
+p.expense-others {
+  color: var(--expense-others-category);
+}
+p.expense-others::before {
+  background-color: var(--expense-others-category);
+}
+
+/* style of income category text */
+p.income-salary {
+  color: var(--salary-category);
+}
+p.income-salary::before {
+  background-color: var(--salary-category);
+}
+p.income-awards {
+  color: var(--awards-category);
+}
+p.income-awards::before {
+  background-color: var(--awards-category);
+}
+p.income-bonus {
+  color: var(--bonus-category);
+}
+p.income-bonus::before {
+  background-color: var(--bonus-category);
+}
+p.income-lottery {
+  color: var(--lottery-category);
+}
+p.income-lottery::before {
+  background-color: var(--lottery-category);
+}
+p.income-investment {
+  color: var(--investment-category);
+}
+p.income-investment::before {
+  background-color: var(--investment-category);
+}
+p.income-others {
+  color: var(--income-others-category);
+}
+p.income-others::before {
+  background-color: var(--income-others-category);
+}
+
+@media screen and (max-width: 768px){
+  .tab-content svg {
+    font-size: 1.4rem ;
+  }
+}
+@media screen and (max-width: 568px) {
+  p.category::before {
+    height: 2rem;
+    top: 0.1rem;
+  }
+}

@@ -1,0 +1,73 @@
+.nav-container {
+  // background-color: #5853bc;
+  background-color: #746cfe;
+  box-shadow: 0 0 1rem 0 rgb(0 0 0 / 20%);
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--white-color);
+  &_logo {
+    align-items: center;
+    .balance {
+      color: var(--active-color);
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+  }
+  &_list {
+    gap: 1.5rem;
+  }
+  svg {
+    color: var(--white-color);
+  }
+}
+.btn-add-expense {
+  background-color: #ae8cfa;
+  /* top: 1rem;
+  right: -88vw; */
+  padding: 1rem;
+  border-radius: 50%;
+}
+.btn-add-expense span {
+  font-size: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-container_logo {
+    .btn-add-expense {
+      /* left: 50%;
+      transform: translateX(-50%); */
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+  }
+  .mobile-balance span {
+    color: var(--active-color);
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .btn-add-expense {
+    width: 2.15rem;
+    height: 2.15rem;
+  }
+  /* div.swipe-up {
+    margin-top: -20%;
+    padding-bottom: 1.5rem;
+  } */
+  .mobile-balance h3:first-child {
+    color: var(--white-color);
+  }
+  .balance {
+    color: var(--active-color);
+    font-size: 1.15rem;
+    font-weight: 500;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  /* div.swipe-up {
+    margin-top: -25%;
+    padding-bottom: 2rem;
+  } */
+}
