@@ -7,7 +7,7 @@ import "../HomePage/HomePage.scss";
 
 const HomePage = () => {
   return (
-    <div className="container mx-auto page-container py-8 px-4 md:py-20 md:px-8">
+    <div className="container mx-auto page-container py-8 px-4 md:pt-28 md:pb-6 md:px-8">
       <ExpenseTabs />
     </div>
   );

@@ -10,7 +10,7 @@ import Header from "./components/Header";
 import "./App.css";
 import "./styles/main.scss";
 
-import { EXPENSE, INCOME } from "./utils/contants";
+import { EXPENSE, INCOME } from "./utils/constants";
 
 function App() {
   const data = [
@@ -51,6 +51,8 @@ function App() {
       wallet: "Bank",
     },
   ];
+  const [open, setOpen] = useState(false);
+  const [isEdited, setEdit] = useState(false);
   const [balance, setBalance] = useState(0);
   const [wallets, setWallets] = useState(["Bank", "Cash"]);
   const [expenseCategories, setExpenseCategory] = useState([
@@ -77,6 +79,13 @@ function App() {
   ]);
   const [expenseType, setExpenseType] = useState([INCOME, EXPENSE]);
   const [transactionList, setTransactionList] = useState(data);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  // handle expense tabs open state
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const handleTabIndex = (id) => {
+    setActiveTabIndex(id);
+  };
+
   const incomeList = transactionList.filter((elm) => elm.type === INCOME);
   const expenseList = transactionList.filter((elm) => elm.type === EXPENSE);
 
@@ -102,12 +111,7 @@ function App() {
     (total, elm) => total + Number(elm),
     0
   );
-  console.log({ incomeList, expenseList });
-  // handle expense tabs open state
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const handleTabIndex = (id) => {
-    setActiveTabIndex(id);
-  };
+  // console.log({ incomeList, expenseList });
 
   // adding new transaction
   const onAddNewTransaction = (newTransaction) => {
@@ -122,16 +126,22 @@ function App() {
   };
 
   const onEditTransaction = (id) => {
-    // console.log(id);
-    const findedIdx = transactionList.findIndex(
+    const foundIdx = transactionList.findIndex(
       (transaction) => transaction.id === id
     );
-    console.log(findedIdx);
-    
-   /*  const newTransaction= {...transactionList[filteredIdx], ...newValue};
+    handleEdit(true);
+
+    setSelectedTransaction(transactionList[foundIdx]);
+    /* const newTransaction = { ...transactionList[foundIdx], ...newValue };
     console.log(newTransaction);
     setTransactionList(newTransaction); */
-  }
+  };
+
+  const handleOpen = (value) => {
+    setOpen(value);
+    // open && setEdit(false);
+  };
+  const handleEdit = (value) => setEdit(value);
 
   useEffect(() => {
     setBalance(incomeTotalAmount - expenseTotalAmount);
@@ -141,12 +151,15 @@ function App() {
     <Browser>
       <ExpenseContext.Provider
         value={{
+          open,
+          isEdited,
           balance,
           wallets,
           expenseCategories,
           incomeCategories,
           expenseType,
           transactionList,
+          selectedTransaction,
           incomeList,
           expenseList,
           expenseBasedOnCategory,
@@ -156,6 +169,8 @@ function App() {
           onEditTransaction,
           activeTabIndex,
           handleTabIndex,
+          handleOpen,
+          handleEdit,
         }}
       >
         <Header></Header>

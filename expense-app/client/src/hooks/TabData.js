@@ -1,10 +1,10 @@
 import React from "react";
 import { useExpenseContext } from "../contexts/ExpenseContext";
 import TabItem from "../components/ExpenseTabs/TabItem.js";
-import { chartColors } from "../utils/contants";
+import { chartColors } from "../utils/constants";
 
 // CUSTOM HOOK
-export const useChartData = () => {
+export const useTabData = () => {
   const {
     expenseCategories,
     incomeCategories,
@@ -12,6 +12,7 @@ export const useChartData = () => {
     incomeList,
     expenseList,
     transactionList,
+    isSelectedTransaction,
     expenseBasedOnCategory,
     incomeBasedOnCategory,
     onDeleteTransaction,
@@ -130,6 +131,6 @@ export const useChartData = () => {
       },
     },
   };
-  const chartData = { tabsData, options };
-  return chartData;
+  const tabContent = { tabsData, options };
+  return tabContent;
 };

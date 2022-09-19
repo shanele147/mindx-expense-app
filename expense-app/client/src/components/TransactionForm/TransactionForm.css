@@ -1,9 +1,6 @@
 .form-container {
-  /*  position: relative;
-  top: -11vh; */
   background-color: #0f1724;
   color: #ffffff;
-  /* padding: 3rem 2rem; */
   border-radius: 0.6rem;
   box-shadow: -1px 5px 35px -8px #080707;
   z-index: 100;
@@ -31,8 +28,6 @@ select {
   padding-bottom: 1rem;
   left: 1rem;
   border-bottom: 1px solid;
-  /* padding-left: 1rem; */
-  /* background-color: #eaeaea; */
 }
 
 .expense-input[type="text"]:focus,
@@ -41,16 +36,28 @@ select {
   background-color: transparent;
 }
 
-.btn-submit {
+.btn-submit,
+.btn-cancel {
   font-size: 1rem;
   -webkit-box-align: center;
   align-items: center;
   border-radius: 9999px;
-  /* border: 1px solid #ae8cfa; */
-  /* background-color: transparent; */
-  background: linear-gradient(283deg, #ae8cfa, #746cfe);
   color: #fefaff;
 }
+.btn-submit {
+  background: linear-gradient(283deg, #ae8cfa, #746cfe);
+}
+.btn-cancel {
+  background: transparent;
+  border: solid 3px #ae8cfa;
+  transition: all 0.3s ease-in-out;
+}
+.btn-cancel:hover {
+  background-color: #ae8cfa;
+  transition: all 0.3s ease-in-out;
+  box-shadow: none;
+}
+
 /* ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 } */
@@ -58,9 +65,10 @@ input::-webkit-calendar-picker-indicator {
   filter: invert(0.6);
 }
 
-
-ul[role="listbox"] li {
+ul[role="listbox"] li,
+.expense-select span {
   background: transparent;
+  text-transform: capitalize;
 }
 
 ul[role="listbox"] li:hover {
@@ -74,7 +82,6 @@ ul::-webkit-scrollbar {
 
 ul::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
   background-color: #455964a6;
 }
 

@@ -13,34 +13,55 @@ import AddingForm from "../AddingForm";
 import "./Header.scss";
 
 const Header = () => {
-  const [openNav, setOpenNav] = useState(false);
-  const [open, setOpen] = useState(false);
-  const handleOpen = (value) => setOpen(value);
-  const { balance, expenseType, transactionList } = useExpenseContext();
+  const { open, isEdited, balance, handleOpen, handleEdit } =
+    useExpenseContext();
 
-  useEffect(() => {
+  /* useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 680 && setOpenNav(false)
     );
-  }, []);
+  }, []); */
 
   const navList = (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 md:mb-0 md:mt-0 md:flex-row md:items-center md:gap-4">
-      <ItemLinks url="">
-        <h3 className="text-sm md:text-base lg:text-xl">Home</h3>
+    <ul className="mb-2 md\:mb-4 mt-2 md\:mt-2 flex gap-2 md:mb-0 md:mt-0 md:flex-row md:items-center md:gap-8 nav-list justify-around">
+      <ItemLinks url="./" itemName="home" tooltips="Homepage">
+        <img
+          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          src="./icons/home-icon.png"
+        ></img>
       </ItemLinks>
-      <ItemLinks url="categories">
-        <h3 className="text-sm md:text-base lg:text-xl">Categories</h3>
+      <ItemLinks
+        url="categories"
+        itemName="categories"
+        tooltips="Categories Page"
+      >
+        <img
+          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          src="./icons/categories-icon.png"
+        ></img>
       </ItemLinks>
-      <ItemLinks url="transactions">
-        <h3 className="text-sm md:text-base lg:text-xl">Transactions</h3>
+      <ItemLinks
+        url="transactions"
+        itemName="transactions"
+        tooltips="Transactions Page"
+      >
+        <img
+          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          src="./icons/transaction-icon.png"
+        ></img>
       </ItemLinks>
-      <ItemLinks url="wallet">
-        <h3 className="text-sm md:text-base lg:text-xl">Wallets</h3>
+      <ItemLinks url="wallets" itemName="wallets" tooltips="Wallets Page">
+        <img
+          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          src="./icons/wallet-icon.png"
+        ></img>
       </ItemLinks>
-      <ItemLinks url="logout">
-        <h3 className="text-sm md:text-base lg:text-xl">LogIn</h3>
+      <ItemLinks url="login" itemName="login" tooltips="LogIn">
+        <img
+          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          src="./icons/login-icon.png"
+        ></img>
       </ItemLinks>
     </ul>
   );
@@ -48,7 +69,7 @@ const Header = () => {
   return (
     <>
       <Navbar
-        className="mx-auto py-2 px-4 md:px-8 md:py-4 nav-container"
+        className="mx-auto py-2 px-4 md:px-8 md:py-4 nav-container fixed z-50"
         color="indigo"
         shadow="true"
         fullWidth="true"
@@ -57,7 +78,7 @@ const Header = () => {
           <div className="hidden md:block">{navList}</div>
           <div className="hidden nav-container_logo w-full md:w-2/5 md:flex items-center md:justify-end md:gap-2 lg:gap-6">
             <div className="flex flex-wrap justify-around items-baseline">
-              <h3 className="text-sm md:text-base lg:text-xl">
+              <h3 className="text-sm md:text-base lg:text-lg">
                 Balance:&nbsp;
               </h3>
               <h3 className="balance">
@@ -74,7 +95,7 @@ const Header = () => {
               <span>+</span>
             </IconButton>
           </div>
-          <IconButton
+          {/* <IconButton
             variant="text"
             className="md:hidden ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent"
             ripple={false}
@@ -110,25 +131,25 @@ const Header = () => {
                 />
               </svg>
             )}
-          </IconButton>
+          </IconButton> */}
         </div>
         <MobileNav
-          open={openNav}
-          className="flex items-baseline justify-between mobile-nav"
+          // open={openNav}
+          className="sm:flex md:hidden transition-all duration-300 items-baseline justify-center mobile-nav"
         >
           {navList}
-          <div className="nav-container_logo sm:w-1/5 flex-col sm:flex-row flex-wrap sm:justify-end"></div>
         </MobileNav>
-        <AddingForm open={open} handleOpen={handleOpen} />
+        <AddingForm open={open} handleOpen={handleOpen} isEdited={isEdited} />
       </Navbar>
 
       <div
-        className={`mobile-balance flex flex-wrap justify-between items-center pt-4 md:pt-8 px-4 md:px-8 pb-0 lg:px-20 md:hidden transition-all duration-300 `}
+        className={`mobile-balance flex flex-wrap justify-between items-center pt-5 md:pt-8 px-4 md:px-8 pb-0 lg:px-20 md:hidden transition-all duration-300`}
       >
-        {/* ${openNav === true ? "swipe-up" : ""} */}
         <div className="flex flex-wrap justify-around items-baseline">
           <h3 className="text-base">Balance:&nbsp;</h3>
-          <h3 className="balance">0</h3>
+          <h3 className="balance">
+            {expenseAppService.convertCurrency(balance, "USD")}
+          </h3>
         </div>
         <IconButton
           className="btn-add-expense"

@@ -4,6 +4,9 @@ svg {
 .tab-container {
   color: #ffffff;
 }
+.tab-container button {
+  text-transform: capitalize;
+}
 .tab-index {
   position: relative;
 }
@@ -167,9 +170,9 @@ p.income-others::before {
   background-color: var(--income-others-category);
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
   .tab-content svg {
-    font-size: 1.4rem ;
+    font-size: 1.4rem;
   }
 }
 @media screen and (max-width: 568px) {

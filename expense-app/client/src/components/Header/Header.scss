@@ -1,8 +1,6 @@
 .nav-container {
-  // background-color: #5853bc;
-  background-color: #746cfe;
   box-shadow: 0 0 1rem 0 rgb(0 0 0 / 20%);
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgb(60 52 98);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: var(--white-color);
@@ -20,7 +18,15 @@
   svg {
     color: var(--white-color);
   }
+  .mobile-nav {
+    height: 100% !important;
+    opacity: 1 !important;
+  }
+  .nav-link[aria-describedby^=":r"] {
+    color: var(--active-color);
+  }
 }
+
 .btn-add-expense {
   background-color: #ae8cfa;
   /* top: 1rem;
@@ -65,9 +71,9 @@
   }
 }
 
-@media screen and (max-width: 380px) {
-  /* div.swipe-up {
-    margin-top: -25%;
-    padding-bottom: 2rem;
-  } */
+@media screen and (max-width: 680px) {
+  .nav-container {
+    // background-color: rgb(175 139 250);
+    bottom: 0;
+  }
 }

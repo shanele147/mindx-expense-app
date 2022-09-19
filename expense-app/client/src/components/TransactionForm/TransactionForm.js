@@ -10,18 +10,25 @@ import {
   DialogBody,
 } from "@material-tailwind/react";
 import "./TransactionForm.css";
-import { INCOME } from "../../utils/contants";
+import { INCOME } from "../../utils/constants";
 
 const TransactionForm = (props) => {
-  const { transaction, handleOpen } = props;
+  const { transaction, open } = props;
+  console.log(transaction.category);
   const {
+    id,
+    isEdited,
     wallets,
     expenseCategories,
     incomeCategories,
     expenseType,
     onAddNewTransaction,
     handleTabIndex,
+    handleOpen,
+    handleEdit,
   } = useExpenseContext();
+
+  // console.log({ transaction, selectedTransaction });
 
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
@@ -31,6 +38,8 @@ const TransactionForm = (props) => {
     ...transaction,
   });
 
+  console.log({ isEdited, category, currentTransaction });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCurrentTransaction({ ...currentTransaction, [name]: value });
@@ -38,12 +47,12 @@ const TransactionForm = (props) => {
 
   const handleWalletChange = (value) => {
     currentTransaction.wallet = value;
-    setCurrentTransaction({ ...currentTransaction, ["wallet"]: value });
+    setCurrentTransaction({ ...currentTransaction, wallet: value });
   };
 
   const handleCategoryChange = (value) => {
     currentTransaction.category = value;
-    setCurrentTransaction({ ...currentTransaction, ["category"]: value });
+    setCurrentTransaction({ ...currentTransaction, category: value });
   };
 
   const handleTypeChange = (value) => {
@@ -98,12 +107,12 @@ const TransactionForm = (props) => {
 
   const onHandleAdd = (e) => {
     e.preventDefault();
-    // const newId = transactionList.length + 1;
+    // CREATE RANDOM ID BY REACT HOOK
     const newID = uuidv4();
     currentTransaction.id = newID;
-    // onAddNewTransaction({ ...transaction, id: newId });
     onAddNewTransaction(currentTransaction);
     handleOpen(false);
+    handleEdit(false);
     currentTransaction.type === INCOME ? handleTabIndex(0) : handleTabIndex(1);
     resetForm();
   };
@@ -111,8 +120,8 @@ const TransactionForm = (props) => {
   const hasAmountError =
     isNaN(currentTransaction.amount) === true ||
     Number(currentTransaction.amount) < 0;
+  // console.log(hasAmountError);
 
-  console.log(currentTransaction);
   return (
     <form
       onSubmit={onHandleAdd}
@@ -198,13 +207,35 @@ const TransactionForm = (props) => {
       </Select>
 
       <Button
-        className="mx-auto px-4 py-3 btn-submit"
+        className={`mx-auto px-4 py-3 btn-submit ${
+          isEdited ? "hidden" : "block"
+        }`}
         type="submit"
-        // disabled={isDateValid && isAmountValid ? false : true}
         style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
       >
         Add new transaction
       </Button>
+      <div
+        className={`mx-auto px-4 py-3 flex gap-6 justify-center ${
+          isEdited ? "flex" : "hidden"
+        }`}
+      >
+        <Button
+          className={`mx-auto px-4 py-3 btn-cancel w-24`}
+          type="cancel"
+          style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
+          onClick={() => handleEdit(false)}
+        >
+          Cancel
+        </Button>
+        <Button
+          className={`mx-auto px-4 py-3 btn-submit w-24`}
+          type="submit"
+          style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
+        >
+          Save
+        </Button>
+      </div>
     </form>
   );
 };

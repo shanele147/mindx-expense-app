@@ -1,12 +1,38 @@
-import "./ItemLinks.scss";
 import { NavLink } from "react-router-dom";
+import { ThemeProvider, Tooltip } from "@material-tailwind/react";
 
-const ItemLinks = ({ url, children }) => {
+import "./ItemLinks.scss";
+
+const ItemLinks = ({ url, children, itemName, tooltips }) => {
+  const customTheme = {
+    tooltip: {
+      styles: {
+        base: {
+          bg: "bg-[#ae8cfa]",
+        },
+      },
+    },
+  };
+
   return (
     <li className="text-2xl font-bold">
-      <NavLink to={`/${url}`} className="text-white hover:text-sky-400">
-        {children}
-      </NavLink>
+      <ThemeProvider value={customTheme}>
+        <Tooltip
+          content={tooltips}
+          animate={{
+            mount: { scale: 1, y: 0 },
+            unmount: { scale: 0, y: 25 },
+          }}
+          placement="top-start"
+        >
+          <NavLink
+            to={`/${url}`}
+            className={`text-white hover:text-sky-400 flex items-center nav-link ${itemName}`}
+          >
+            {children}
+          </NavLink>
+        </Tooltip>
+      </ThemeProvider>
     </li>
   );
 };
