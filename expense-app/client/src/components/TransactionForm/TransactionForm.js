@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useExpenseContext } from "../../contexts/ExpenseContext";
 import {
@@ -11,34 +11,32 @@ import {
 } from "@material-tailwind/react";
 import "./TransactionForm.css";
 import { INCOME } from "../../utils/constants";
+import CustomSelect from "../CustomSelect";
 
 const TransactionForm = (props) => {
-  const { transaction, open } = props;
-  console.log(transaction.category);
+  const { transaction, categories, type } = props;
+
   const {
     id,
+    open,
     isEdited,
     wallets,
     expenseCategories,
     incomeCategories,
     expenseType,
-    onAddNewTransaction,
+    onUpdateTransactionList,
     handleTabIndex,
     handleOpen,
     handleEdit,
   } = useExpenseContext();
 
-  // console.log({ transaction, selectedTransaction });
-
-  const [type, setType] = useState("");
-  const [category, setCategory] = useState("");
-  const [wallet, setWallet] = useState("");
-  const [categories, setCategories] = useState([]);
+  const [currentCategories, setCategories] = useState(categories);
   const [currentTransaction, setCurrentTransaction] = useState({
     ...transaction,
   });
-
-  console.log({ isEdited, category, currentTransaction });
+  const [currentType, setType] = useState(type);
+  const [category, setCategory] = useState(transaction.category);
+  const [wallet, setWallet] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,30 +44,34 @@ const TransactionForm = (props) => {
   };
 
   const handleWalletChange = (value) => {
-    currentTransaction.wallet = value;
+    // currentTransaction.wallet = value;
+    setWallet(value);
     setCurrentTransaction({ ...currentTransaction, wallet: value });
   };
 
-  const handleCategoryChange = (value) => {
-    currentTransaction.category = value;
-    setCurrentTransaction({ ...currentTransaction, category: value });
-  };
-
   const handleTypeChange = (value) => {
-    currentTransaction.type = value;
+    value
+      ? (currentTransaction.type = value)
+      : (currentTransaction.type = type);
+    setType(value);
     setCurrentTransaction({ ...currentTransaction, type: value });
     currentTransaction.type === INCOME
       ? setCategories(incomeCategories)
       : setCategories(expenseCategories);
-
-    if (categories.indexOf(category) === -1) {
-      setCategory(categories[0]);
-    }
   };
 
-  const categoryList = categories.map((elm, idx) => {
+  const handleCategoryChange = (value) => {
+    console.log("Category - " + currentCategories);
+    setCategory(value);
+    setCurrentTransaction({ ...currentTransaction, category: value });
+    console.log(currentCategories.indexOf(value));
+    console.log("Current category: " + currentTransaction.category);
+    console.log("State category: " + (category ? category : "null"));
+  };
+
+  const categoryList = currentCategories.map((elm, idx) => {
     return (
-      <Option value={elm} key={idx}>
+      <Option value={elm} key={idx} index={idx}>
         {elm}
       </Option>
     );
@@ -77,7 +79,7 @@ const TransactionForm = (props) => {
 
   const walletList = wallets.map((elm, idx) => {
     return (
-      <Option value={elm} key={idx}>
+      <Option value={elm} key={idx} index={idx}>
         {elm}
       </Option>
     );
@@ -85,7 +87,7 @@ const TransactionForm = (props) => {
 
   const typeList = expenseType.map((elm, idx) => {
     return (
-      <Option value={elm} key={idx}>
+      <Option value={elm} key={idx} index={idx}>
         {elm}
       </Option>
     );
@@ -110,7 +112,7 @@ const TransactionForm = (props) => {
     // CREATE RANDOM ID BY REACT HOOK
     const newID = uuidv4();
     currentTransaction.id = newID;
-    onAddNewTransaction(currentTransaction);
+    onUpdateTransactionList(currentTransaction);
     handleOpen(false);
     handleEdit(false);
     currentTransaction.type === INCOME ? handleTabIndex(0) : handleTabIndex(1);
@@ -120,8 +122,10 @@ const TransactionForm = (props) => {
   const hasAmountError =
     isNaN(currentTransaction.amount) === true ||
     Number(currentTransaction.amount) < 0;
-  // console.log(hasAmountError);
 
+  useEffect(() => {
+    setCurrentTransaction({ ...currentTransaction, type });
+  }, []);
   return (
     <form
       onSubmit={onHandleAdd}
@@ -176,8 +180,10 @@ const TransactionForm = (props) => {
         className="expense-select"
         variant="standard"
         color="deep-purple"
-        value={currentTransaction.type}
-        style={{ borderBottom: "1px solid" }}
+        arrow={false}
+        disabled={currentTransaction.type === currentType ? true : false}
+        value={currentTransaction.type ? currentTransaction.type : currentType}
+        style={{ borderBottom: "1px solid", background: "transparent" }}
         onChange={handleTypeChange}
       >
         {typeList}
@@ -194,6 +200,7 @@ const TransactionForm = (props) => {
       >
         {categoryList}
       </Select>
+
       <Select
         label="Wallet"
         className="expense-select"
@@ -208,12 +215,12 @@ const TransactionForm = (props) => {
 
       <Button
         className={`mx-auto px-4 py-3 btn-submit ${
-          isEdited ? "hidden" : "block"
+          open && !isEdited ? "block" : "hidden"
         }`}
         type="submit"
         style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
       >
-        Add new transaction
+        {`Add new ${currentType}`}
       </Button>
       <div
         className={`mx-auto px-4 py-3 flex gap-6 justify-center ${
@@ -222,7 +229,7 @@ const TransactionForm = (props) => {
       >
         <Button
           className={`mx-auto px-4 py-3 btn-cancel w-24`}
-          type="cancel"
+          type="button"
           style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
           onClick={() => handleEdit(false)}
         >

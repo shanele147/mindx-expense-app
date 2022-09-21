@@ -114,34 +114,47 @@ function App() {
   // console.log({ incomeList, expenseList });
 
   // adding new transaction
-  const onAddNewTransaction = (newTransaction) => {
-    setTransactionList([...transactionList, newTransaction]);
+  const onUpdateTransactionList = (newTransaction) => {
+    try {
+      if (!selectedTransaction) {
+        console.log("Add new transaction");
+        setTransactionList([...transactionList, newTransaction]);
+      } else {
+        console.log("Update transaction");
+        const selectedInx = transactionList.findIndex(
+          (transaction) => transaction.id === selectedTransaction.id
+        );
+        transactionList[selectedInx] = {
+          ...selectedTransaction,
+          ...newTransaction,
+        };
+        setTransactionList([...transactionList]);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const onDeleteTransaction = (idx) => {
+  const onDeleteTransaction = (id) => {
     const filteredTransaction = transactionList.filter(
-      (transaction) => transaction.id !== idx
+      (transaction) => transaction.id !== id
     );
     setTransactionList(filteredTransaction);
   };
 
   const onEditTransaction = (id) => {
-    const foundIdx = transactionList.findIndex(
+    const selectedIdx = transactionList.findIndex(
       (transaction) => transaction.id === id
     );
     handleEdit(true);
-
-    setSelectedTransaction(transactionList[foundIdx]);
-    /* const newTransaction = { ...transactionList[foundIdx], ...newValue };
-    console.log(newTransaction);
-    setTransactionList(newTransaction); */
+    setSelectedTransaction(transactionList[selectedIdx]);
   };
 
-  const handleOpen = (value) => {
+  const handleOpen = (value) => setOpen(value);
+  const handleEdit = (value) => {
+    setEdit(value);
     setOpen(value);
-    // open && setEdit(false);
   };
-  const handleEdit = (value) => setEdit(value);
 
   useEffect(() => {
     setBalance(incomeTotalAmount - expenseTotalAmount);
@@ -164,7 +177,7 @@ function App() {
           expenseList,
           expenseBasedOnCategory,
           incomeBasedOnCategory,
-          onAddNewTransaction,
+          onUpdateTransactionList,
           onDeleteTransaction,
           onEditTransaction,
           activeTabIndex,

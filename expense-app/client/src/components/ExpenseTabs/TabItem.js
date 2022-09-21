@@ -7,7 +7,6 @@ import {
   MdDeleteForever,
   MdOutlineDriveFileRenameOutline,
 } from "react-icons/md";
-import AddingForm from "../AddingForm";
 
 const TabItem = (props) => {
   const { transaction, id, onDeleteTransaction, onEditTransaction } = props;
@@ -49,7 +48,6 @@ const TabItem = (props) => {
           </div>
         </li>
       </ul>
-      {isEdited && <AddingForm />}
     </>
   );
 };

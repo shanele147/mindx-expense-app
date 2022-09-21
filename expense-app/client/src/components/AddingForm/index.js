@@ -4,12 +4,23 @@ import TransactionForm from "../TransactionForm/TransactionForm";
 import { useExpenseContext } from "../../contexts/ExpenseContext";
 import { Dialog, DialogBody } from "@material-tailwind/react";
 
+import { INCOME, EXPENSE } from "../../utils/constants";
 import "../TransactionForm/TransactionForm.css";
 import "animate.css";
+import CustomSelect from "../CustomSelect";
 
 const AddingForm = (props) => {
-  const { open, handleOpen, isEdited, selectedTransaction, handleEdit } =
-    useExpenseContext();
+  const {
+    open,
+    handleOpen,
+    isEdited,
+    activeTabIndex,
+    selectedTransaction,
+    handleEdit,
+    expenseType,
+    expenseCategories,
+    incomeCategories,
+  } = useExpenseContext();
 
   const [transaction, setTransaction] = useState({
     date: "",
@@ -19,6 +30,31 @@ const AddingForm = (props) => {
     category: "",
     wallet: "",
   });
+
+  const [isActive, setActive] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const onHandleClick = (type) => {
+    console.log(type);
+    // setActive(!isActive);
+    type === "income"
+      ? setCategories(incomeCategories)
+      : setCategories(expenseCategories);
+  };
+
+  // console.log(selectedTransaction);
+  /* const isIncomeType =
+    activeTabIndex === 0 ||
+    (selectedTransaction && selectedTransaction.type === INCOME); */
+  // console.log(isIncomeType && "Type is Income");
+
+  const options =
+    categories.length > 0 &&
+    categories.map((elm) => ({
+      label: elm,
+      value: elm.toLowerCase(),
+      color: "#455a64",
+    }));
+
   return (
     <div className={`flex flex-col gap-6 md:gap-8 mx-auto animate__animated`}>
       <Dialog
@@ -35,9 +71,24 @@ const AddingForm = (props) => {
         style={{ backgroundColor: "transparent" }}
       >
         <DialogBody>
+          {/* <div className="justify-between flex flex-row gap-12 w-full">
+            {expenseType.map((type) => {
+              return (
+                <button onClick={() => onHandleClick(type)}>{type}</button>
+              );
+            })}
+            <CustomSelect
+              categories={categories}
+              options={options}
+              defaultOption={options[0]}
+            />
+          </div> */}
           <TransactionForm
             transaction={isEdited ? selectedTransaction : transaction}
-            open={open}
+            categories={
+              activeTabIndex === 0 ? incomeCategories : expenseCategories
+            }
+            type={activeTabIndex === 0 ? INCOME : EXPENSE}
           />
         </DialogBody>
       </Dialog>

@@ -18,6 +18,7 @@ const ItemLinks = ({ url, children, itemName, tooltips }) => {
     <li className="text-2xl font-bold">
       <ThemeProvider value={customTheme}>
         <Tooltip
+          className="2xl:hidden"
           content={tooltips}
           animate={{
             mount: { scale: 1, y: 0 },

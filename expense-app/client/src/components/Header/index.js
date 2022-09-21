@@ -16,18 +16,20 @@ const Header = () => {
   const { open, isEdited, balance, handleOpen, handleEdit } =
     useExpenseContext();
 
-  /* useEffect(() => {
+  const { openNav, setOpenNav } = useState(false);
+  useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 680 && setOpenNav(false)
     );
-  }, []); */
+  }, []);
 
   const navList = (
     <ul className="mb-2 md\:mb-4 mt-2 md\:mt-2 flex gap-2 md:mb-0 md:mt-0 md:flex-row md:items-center md:gap-8 nav-list justify-around">
       <ItemLinks url="./" itemName="home" tooltips="Homepage">
+        <p className="hidden 2xl:inline-block">Homepage</p>
         <img
-          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/home-icon.png"
         ></img>
       </ItemLinks>
@@ -36,8 +38,9 @@ const Header = () => {
         itemName="categories"
         tooltips="Categories Page"
       >
+        <p className="hidden 2xl:inline-block">Categories</p>
         <img
-          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/categories-icon.png"
         ></img>
       </ItemLinks>
@@ -46,20 +49,23 @@ const Header = () => {
         itemName="transactions"
         tooltips="Transactions Page"
       >
+        <p className="hidden 2xl:inline-block">Transactions</p>
         <img
-          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/transaction-icon.png"
         ></img>
       </ItemLinks>
       <ItemLinks url="wallets" itemName="wallets" tooltips="Wallets Page">
+        <p className="hidden 2xl:inline-block">Wallets</p>
         <img
-          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/wallet-icon.png"
         ></img>
       </ItemLinks>
       <ItemLinks url="login" itemName="login" tooltips="LogIn">
+        <p className="hidden 2xl:inline-block">LogIn</p>
         <img
-          className="w-6 sm:w-8 xl:w-12 nav-icon"
+          className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/login-icon.png"
         ></img>
       </ItemLinks>
@@ -97,7 +103,7 @@ const Header = () => {
           </div>
           {/* <IconButton
             variant="text"
-            className="md:hidden ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent"
+            className="md:hidden ml-auto h-6 w-8 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent"
             ripple={false}
             onClick={() => setOpenNav(!openNav)}
           >
@@ -105,7 +111,7 @@ const Header = () => {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                className="h-6 w-6"
+                className="h-6 w-8"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -119,7 +125,7 @@ const Header = () => {
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="h-6 w-8"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -134,7 +140,7 @@ const Header = () => {
           </IconButton> */}
         </div>
         <MobileNav
-          // open={openNav}
+          open={openNav ? true : false}
           className="sm:flex md:hidden transition-all duration-300 items-baseline justify-center mobile-nav"
         >
           {navList}
