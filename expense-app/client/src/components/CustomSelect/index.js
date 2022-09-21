@@ -6,26 +6,19 @@ import "../../components/TransactionForm/TransactionForm.css";
 import { INCOME } from "../../utils/constants";
 
 const CustomSelect = (props) => {
-  const { categories, category, options, defaultOption } = props;
-  /* const options =
+  const { categories, category, isEdited, handleCategoryChange, type } = props;
+
+  const options =
     categories.length > 0 &&
     categories.map((elm) => ({
       label: elm,
       value: elm.toLowerCase(),
       color: "#455a64",
-    })); */
-  const [catValue, setCatValue] = useState("");
-  // const [defaultOption, setDefaultOption] = useState(options[0]);
+    }));
+  const [catValue, setCatValue] = useState(isEdited ? category : "");
+  const [updateType, setType] = useState(type);
 
-  console.log("Current category: " + catValue);
-  /* const categoryList = categories.map((elm, idx) => {
-    return (
-      <Option value={elm} key={idx} index={idx}>
-        {elm}
-      </Option>
-    );
-  });
- */
+  // console.log("Current category: " + catValue.label);
 
   const optionStyles = {
     control: (styles) => ({
@@ -54,9 +47,14 @@ const CustomSelect = (props) => {
     valueContainer: (styles) => ({
       ...styles,
       padding: "0",
+      color: "#000000",
+    }),
+    menuList: (styles) => ({
+      ...styles,
+      color: "#000000",
     }),
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-      console.log("option", data.color, isDisabled, isFocused, isSelected);
+      // console.log("option", data.color, isDisabled, isFocused, isSelected);
       return {
         ...styles,
         color: isDisabled ? undefined : isSelected ? "#ae8cfa" : undefined,
@@ -70,12 +68,14 @@ const CustomSelect = (props) => {
       };
     },
   };
-  const onHandleChange = (value) => {
-    setCatValue(value);
+  const onHandleChange = (elm) => {
+    setCatValue(elm);
+    handleCategoryChange(elm.label);
   };
+
   const style = {
     width: "100%",
-    maxWidth: "600px",
+    // maxWidth: "600px",
     borderRadius: "none",
     borderBottom: "1px solid #455a64",
     padding: "0.25rem 0",
@@ -83,22 +83,34 @@ const CustomSelect = (props) => {
   };
 
   useEffect(() => {
-    setCatValue(categories[0]);
-  }, [categories]);
+    isEdited ? setCatValue(category) : setCatValue(categories[0]);
+    setType(type);
+  }, [categories, category]);
 
   return (
-    <div style={style}>
-      <label name="Categories" className="transition duration-300">
-        Select Category
+    <div style={style} className="relative w-full min-w-[200px] h-11">
+      <label
+        name="category"
+        className={`${
+          updateType || isEdited ? "" : "deactivated"
+        } flex w-full h-full select-none pointer-events-none absolute font-normal transition-all -top-1.5 after:content[' '] after:block after:w-full after:absolute after:-bottom-1.5 left-0 after:border-b-2 after:transition-transform after:duration-300 text-[11px] peer-disabled:text-transparent after:scale-x-0 leading-tight text-blue-gray-500 after:border-deep-purple-500`}
+      >
+        Category
       </label>
       {categories.length > 0 && (
         <Select
           styles={optionStyles}
           className="category-select"
-          // defaultValue={defaultOption?.defaultOption}
           defaultValue={options[0]}
-          name="Categories"
+          isClearable
+          isSearchable={false}
+          name="category"
           options={options}
+          placeholder={
+            !isEdited ? "" : catValue ? catValue : "Please select item..."
+          }
+          value={catValue}
+          onChange={onHandleChange}
         />
       )}
     </div>

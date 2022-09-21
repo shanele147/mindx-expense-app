@@ -15,7 +15,6 @@ import CustomSelect from "../CustomSelect";
 
 const TransactionForm = (props) => {
   const { transaction, categories, type } = props;
-
   const {
     id,
     open,
@@ -29,6 +28,11 @@ const TransactionForm = (props) => {
     handleOpen,
     handleEdit,
   } = useExpenseContext();
+
+  const selectData = {
+    income: incomeCategories,
+    expense: expenseCategories,
+  };
 
   const [currentCategories, setCategories] = useState(categories);
   const [currentTransaction, setCurrentTransaction] = useState({
@@ -55,9 +59,8 @@ const TransactionForm = (props) => {
       : (currentTransaction.type = type);
     setType(value);
     setCurrentTransaction({ ...currentTransaction, type: value });
-    currentTransaction.type === INCOME
-      ? setCategories(incomeCategories)
-      : setCategories(expenseCategories);
+    setCategories(selectData[value]);
+    setCategory(selectData[value][0]);
   };
 
   const handleCategoryChange = (value) => {
@@ -126,6 +129,7 @@ const TransactionForm = (props) => {
   useEffect(() => {
     setCurrentTransaction({ ...currentTransaction, type });
   }, []);
+
   return (
     <form
       onSubmit={onHandleAdd}
@@ -180,16 +184,16 @@ const TransactionForm = (props) => {
         className="expense-select"
         variant="standard"
         color="deep-purple"
-        arrow={false}
-        disabled={currentTransaction.type === currentType ? true : false}
-        value={currentTransaction.type ? currentTransaction.type : currentType}
+        /* arrow={false}
+        disabled={currentTransaction.type === currentType ? true : false} */
+        value={transaction.type ? currentType : ""}
         style={{ borderBottom: "1px solid", background: "transparent" }}
         onChange={handleTypeChange}
       >
         {typeList}
       </Select>
 
-      <Select
+      {/*  <Select
         label="Category"
         className="expense-select category"
         variant="standard"
@@ -199,7 +203,16 @@ const TransactionForm = (props) => {
         onChange={handleCategoryChange}
       >
         {categoryList}
-      </Select>
+      </Select> */}
+
+      <CustomSelect
+        categories={currentCategories}
+        // options={options}
+        category={category}
+        isEdited={isEdited}
+        type={currentType}
+        handleCategoryChange={handleCategoryChange}
+      />
 
       <Select
         label="Wallet"

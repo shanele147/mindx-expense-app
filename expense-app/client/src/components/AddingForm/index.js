@@ -31,11 +31,9 @@ const AddingForm = (props) => {
     wallet: "",
   });
 
-  const [isActive, setActive] = useState(false);
   const [categories, setCategories] = useState([]);
   const onHandleClick = (type) => {
     console.log(type);
-    // setActive(!isActive);
     type === "income"
       ? setCategories(incomeCategories)
       : setCategories(expenseCategories);
@@ -71,18 +69,14 @@ const AddingForm = (props) => {
         style={{ backgroundColor: "transparent" }}
       >
         <DialogBody>
-          {/* <div className="justify-between flex flex-row gap-12 w-full">
+          {/* <div className="justify-around flex flex-row gap-12 w-full label-container">
             {expenseType.map((type) => {
               return (
                 <button onClick={() => onHandleClick(type)}>{type}</button>
               );
             })}
-            <CustomSelect
-              categories={categories}
-              options={options}
-              defaultOption={options[0]}
-            />
-          </div> */}
+          </div>
+          <CustomSelect categories={categories} options={options} /> */}
           <TransactionForm
             transaction={isEdited ? selectedTransaction : transaction}
             categories={

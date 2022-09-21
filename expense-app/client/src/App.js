@@ -115,6 +115,7 @@ function App() {
 
   // adding new transaction
   const onUpdateTransactionList = (newTransaction) => {
+    console.log(selectedTransaction);
     try {
       if (!selectedTransaction) {
         console.log("Add new transaction");
