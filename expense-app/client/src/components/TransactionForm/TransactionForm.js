@@ -14,7 +14,7 @@ import { INCOME } from "../../utils/constants";
 import CustomSelect from "../CustomSelect";
 
 const TransactionForm = (props) => {
-  const { transaction, categories, type } = props;
+  const { transaction } = props;
   const {
     id,
     open,
@@ -34,13 +34,15 @@ const TransactionForm = (props) => {
     expense: expenseCategories,
   };
 
-  const [currentCategories, setCategories] = useState(categories);
+  const [currentCategories, setCategories] = useState(
+    isEdited ? selectData[transaction.type] : []
+  );
   const [currentTransaction, setCurrentTransaction] = useState({
     ...transaction,
   });
-  const [currentType, setType] = useState(type);
+  const [currentType, setType] = useState(transaction.type);
   const [category, setCategory] = useState(transaction.category);
-  const [wallet, setWallet] = useState("");
+  const [wallet, setWallet] = useState(transaction.wallet);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,9 +56,7 @@ const TransactionForm = (props) => {
   };
 
   const handleTypeChange = (value) => {
-    value
-      ? (currentTransaction.type = value)
-      : (currentTransaction.type = type);
+    currentTransaction.type = value;
     setType(value);
     setCurrentTransaction({ ...currentTransaction, type: value });
     setCategories(selectData[value]);
@@ -64,13 +64,12 @@ const TransactionForm = (props) => {
   };
 
   const handleCategoryChange = (value) => {
-    console.log("Category - " + currentCategories);
     setCategory(value);
     setCurrentTransaction({ ...currentTransaction, category: value });
-    console.log(currentCategories.indexOf(value));
-    console.log("Current category: " + currentTransaction.category);
-    console.log("State category: " + (category ? category : "null"));
   };
+
+  console.log(currentCategories);
+  console.log(category);
 
   const categoryList = currentCategories.map((elm, idx) => {
     return (
@@ -126,9 +125,9 @@ const TransactionForm = (props) => {
     isNaN(currentTransaction.amount) === true ||
     Number(currentTransaction.amount) < 0;
 
-  useEffect(() => {
+  /* useEffect(() => {
     setCurrentTransaction({ ...currentTransaction, type });
-  }, []);
+  }, []); */
 
   return (
     <form
@@ -147,6 +146,7 @@ const TransactionForm = (props) => {
         required={true}
         value={currentTransaction.date}
         onChange={handleInputChange}
+        autocomplete="off"
       />
       <Input
         key="amount"
@@ -160,6 +160,7 @@ const TransactionForm = (props) => {
         required={true}
         value={currentTransaction.amount}
         onChange={handleInputChange}
+        autocomplete="off"
       />
       {hasAmountError && (
         <div style={{ color: "#bd2560", fontSize: "0.95rem" }}>
@@ -178,6 +179,7 @@ const TransactionForm = (props) => {
         required={true}
         value={currentTransaction.description}
         onChange={handleInputChange}
+        autocomplete="off"
       />
       <Select
         label="Type"
@@ -186,7 +188,7 @@ const TransactionForm = (props) => {
         color="deep-purple"
         /* arrow={false}
         disabled={currentTransaction.type === currentType ? true : false} */
-        value={transaction.type ? currentType : ""}
+        value={currentTransaction.type}
         style={{ borderBottom: "1px solid", background: "transparent" }}
         onChange={handleTypeChange}
       >

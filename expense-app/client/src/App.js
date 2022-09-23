@@ -117,7 +117,7 @@ function App() {
   const onUpdateTransactionList = (newTransaction) => {
     console.log(selectedTransaction);
     try {
-      if (!selectedTransaction) {
+      if (!isEdited) {
         console.log("Add new transaction");
         setTransactionList([...transactionList, newTransaction]);
       } else {

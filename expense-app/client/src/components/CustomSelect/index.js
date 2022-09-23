@@ -15,18 +15,28 @@ const CustomSelect = (props) => {
       value: elm.toLowerCase(),
       color: "#455a64",
     }));
-  const [catValue, setCatValue] = useState(isEdited ? category : "");
-  const [updateType, setType] = useState(type);
 
-  // console.log("Current category: " + catValue.label);
+  const [catValue, setCatValue] = useState(isEdited ? options[0] : {});
+  const [updateType, setType] = useState(type);
+  const [isActive, setActive] = useState(false);
+
+  const catIndex =
+    options && options.findIndex((elm) => elm.label === category);
 
   const optionStyles = {
     control: (styles) => ({
       ...styles,
       backgroundColor: "ffffff",
-      border: "none",
+      border: 0,
+      /* borderBottom: "1px solid #455a64",
+      "&:hover": {
+        borderBottom: "1px solid #ae8cfa",
+      },
+      "&:focus": {
+        borderBottom: "1px solid #ae8cfa",
+      }, */
       borderRadius: "none",
-      outline: "none",
+      boxShadow: "none",
     }),
     placeholder: (styles) => ({
       ...styles,
@@ -73,26 +83,41 @@ const CustomSelect = (props) => {
     handleCategoryChange(elm.label);
   };
 
+  const onHandleActive = () => {
+    setActive(!isActive);
+  };
+
   const style = {
     width: "100%",
-    // maxWidth: "600px",
     borderRadius: "none",
     borderBottom: "1px solid #455a64",
-    padding: "0.25rem 0",
+    padding: "0.5rem 0 0 0",
     outline: "none",
   };
 
   useEffect(() => {
-    isEdited ? setCatValue(category) : setCatValue(categories[0]);
+    isEdited || category
+      ? setCatValue(options[catIndex])
+      : setCatValue(options[0]);
     setType(type);
   }, [categories, category]);
 
   return (
-    <div style={style} className="relative w-full min-w-[200px] h-11">
+    <div
+      style={style}
+      className={`relative w-full min-w-[200px] h-11 category-select__container ${
+        isActive ? "active" : ""
+      }`}
+    >
+      <button
+        type="button"
+        className="peer w-full h-full peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal text-left outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all border-b text-sm pt-4 pb-1.5 border-blue-gray-200 expense-select"
+        onClick={() => onHandleActive()}
+      ></button>
       <label
         name="category"
         className={`${
-          updateType || isEdited ? "" : "deactivated"
+          updateType || isEdited ? "" : "activated"
         } flex w-full h-full select-none pointer-events-none absolute font-normal transition-all -top-1.5 after:content[' '] after:block after:w-full after:absolute after:-bottom-1.5 left-0 after:border-b-2 after:transition-transform after:duration-300 text-[11px] peer-disabled:text-transparent after:scale-x-0 leading-tight text-blue-gray-500 after:border-deep-purple-500`}
       >
         Category
@@ -100,15 +125,14 @@ const CustomSelect = (props) => {
       {categories.length > 0 && (
         <Select
           styles={optionStyles}
-          className="category-select"
+          className="category-select absolute top-1 w-full"
+          classNamePrefix="category"
           defaultValue={options[0]}
           isClearable
           isSearchable={false}
           name="category"
           options={options}
-          placeholder={
-            !isEdited ? "" : catValue ? catValue : "Please select item..."
-          }
+          placeholder={catValue ? catValue : "Please select an item..."}
           value={catValue}
           onChange={onHandleChange}
         />
@@ -118,18 +142,3 @@ const CustomSelect = (props) => {
 };
 
 export default CustomSelect;
-{
-  /* <div className="select-container text-black">
-      <select
-        value={catValue}
-        onChange={onHandleChange}
-        className="text-black w-40 px-4 py-1 min-h-fit"
-      >
-        {categories.map((option, idx) => (
-          <option value={option} key={idx}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </div> */
-}

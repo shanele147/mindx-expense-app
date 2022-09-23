@@ -79,10 +79,10 @@ const AddingForm = (props) => {
           <CustomSelect categories={categories} options={options} /> */}
           <TransactionForm
             transaction={isEdited ? selectedTransaction : transaction}
-            categories={
+            /*  categories={
               activeTabIndex === 0 ? incomeCategories : expenseCategories
             }
-            type={activeTabIndex === 0 ? INCOME : EXPENSE}
+            type={activeTabIndex === 0 ? INCOME : EXPENSE} */
           />
         </DialogBody>
       </Dialog>
