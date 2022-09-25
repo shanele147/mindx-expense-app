@@ -11,6 +11,10 @@ import "./App.css";
 import "./styles/main.scss";
 
 import { EXPENSE, INCOME } from "./utils/constants";
+import AuthState from "./contexts/AuthState/AuthState";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import PageContainer from "./components/PageContainer/PageContainer";
 
 function App() {
   const data = [
@@ -163,35 +167,42 @@ function App() {
 
   return (
     <Browser>
-      <ExpenseContext.Provider
-        value={{
-          open,
-          isEdited,
-          balance,
-          wallets,
-          expenseCategories,
-          incomeCategories,
-          expenseType,
-          transactionList,
-          selectedTransaction,
-          incomeList,
-          expenseList,
-          expenseBasedOnCategory,
-          incomeBasedOnCategory,
-          onUpdateTransactionList,
-          onDeleteTransaction,
-          onEditTransaction,
-          activeTabIndex,
-          handleTabIndex,
-          handleOpen,
-          handleEdit,
-        }}
-      >
-        <Header></Header>
-        <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-        </Routes>
-      </ExpenseContext.Provider>
+      <AuthState>
+        <ExpenseContext.Provider
+          value={{
+            open,
+            isEdited,
+            balance,
+            wallets,
+            expenseCategories,
+            incomeCategories,
+            expenseType,
+            transactionList,
+            selectedTransaction,
+            incomeList,
+            expenseList,
+            expenseBasedOnCategory,
+            incomeBasedOnCategory,
+            onUpdateTransactionList,
+            onDeleteTransaction,
+            onEditTransaction,
+            activeTabIndex,
+            handleTabIndex,
+            handleOpen,
+            handleEdit,
+          }}
+        >
+          
+          <Routes>
+            <Route
+              path="/"
+              element={<PrivateRoute component={HomePage} />}
+            />
+            <Route path="/login" element={<LoginPage />} />
+            {/* <Route path="/register" element={<Register />} /> */}
+          </Routes>
+        </ExpenseContext.Provider>
+      </AuthState>
     </Browser>
   );
 }

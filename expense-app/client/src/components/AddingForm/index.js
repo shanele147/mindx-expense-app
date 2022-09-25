@@ -22,7 +22,7 @@ const AddingForm = (props) => {
     incomeCategories,
   } = useExpenseContext();
 
-  const [transaction, setTransaction] = useState({
+  const [transaction, setTransaction] = useState(isEdited ? selectedTransaction :{
     date: "",
     amount: "",
     description: "",

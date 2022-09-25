@@ -15,6 +15,7 @@ import CustomSelect from "../CustomSelect";
 
 const TransactionForm = (props) => {
   const { transaction } = props;
+  // console.log(transaction)
   const {
     id,
     open,

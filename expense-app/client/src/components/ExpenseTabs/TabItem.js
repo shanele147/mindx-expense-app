@@ -2,7 +2,7 @@ import React from "react";
 import { useExpenseContext } from "../../contexts/ExpenseContext";
 import { Dialog, DialogBody } from "@material-tailwind/react";
 
-import expenseAppService from "../../services";
+import expenseAppService from "../../services/expenseAppService";
 import {
   MdDeleteForever,
   MdOutlineDriveFileRenameOutline,

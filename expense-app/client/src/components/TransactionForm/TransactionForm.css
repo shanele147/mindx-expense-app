@@ -100,7 +100,12 @@ input:focus,
 select:focus {
   outline: none;
 }
+
 label.activated[name="category"] {
+  top: 0rem;
+}
+
+label.deactivated[name="category"] {
   top: 0.85rem;
   font-size: 0.85rem;
 }

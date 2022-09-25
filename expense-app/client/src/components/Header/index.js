@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { useExpenseContext } from "../../contexts/ExpenseContext";
-import expenseAppService from "../../services";
+import expenseAppService from "../../services/expenseAppService";
 import AddingForm from "../AddingForm";
 import "./Header.scss";
 
@@ -84,7 +84,7 @@ const Header = () => {
           <div className="hidden md:block">{navList}</div>
           <div className="hidden nav-container_logo w-full md:w-2/5 md:flex items-center md:justify-end md:gap-2 lg:gap-6">
             <div className="flex flex-wrap justify-around items-baseline">
-              <h3 className="text-sm md:text-base lg:text-lg">
+              <h3 className="text-sm md:text-base lg:text-lg text-white">
                 Balance:&nbsp;
               </h3>
               <h3 className="balance">
@@ -152,7 +152,7 @@ const Header = () => {
         className={`mobile-balance flex flex-wrap justify-between items-center pt-5 md:pt-8 px-4 md:px-8 pb-0 lg:px-20 md:hidden transition-all duration-300`}
       >
         <div className="flex flex-wrap justify-around items-baseline">
-          <h3 className="text-base">Balance:&nbsp;</h3>
+          <h3 className="text-base text-white">Balance:&nbsp;</h3>
           <h3 className="balance">
             {expenseAppService.convertCurrency(balance, "USD")}
           </h3>
