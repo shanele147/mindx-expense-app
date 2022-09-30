@@ -24,7 +24,8 @@ select {
 .expense-input[type="date"]:focus::placeholder {
   display: none;
 }
-.expense-input[type="text"] {
+.expense-input[type="text"],
+.expense-input[type="password"] {
   caret-color: #ae8cfa;
   padding-bottom: 1rem;
   left: 1rem;

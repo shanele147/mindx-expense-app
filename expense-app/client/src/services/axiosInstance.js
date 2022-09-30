@@ -1,6 +1,5 @@
-
 /**
- * @return {object} - axiosInstance return the Config object for axios
+ * @return {object} - axiosInstance return the Config object {} for axios
  */
 import axios from "axios";
 import { BASE_URL } from "../config/domain";

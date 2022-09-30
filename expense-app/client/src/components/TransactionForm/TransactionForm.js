@@ -15,7 +15,6 @@ import CustomSelect from "../CustomSelect";
 
 const TransactionForm = (props) => {
   const { transaction } = props;
-  // console.log(transaction)
   const {
     id,
     open,
@@ -51,7 +50,6 @@ const TransactionForm = (props) => {
   };
 
   const handleWalletChange = (value) => {
-    // currentTransaction.wallet = value;
     setWallet(value);
     setCurrentTransaction({ ...currentTransaction, wallet: value });
   };
@@ -126,10 +124,6 @@ const TransactionForm = (props) => {
     isNaN(currentTransaction.amount) === true ||
     Number(currentTransaction.amount) < 0;
 
-  /* useEffect(() => {
-    setCurrentTransaction({ ...currentTransaction, type });
-  }, []); */
-
   return (
     <form
       onSubmit={onHandleAdd}
@@ -147,7 +141,7 @@ const TransactionForm = (props) => {
         required={true}
         value={currentTransaction.date}
         onChange={handleInputChange}
-        autocomplete="off"
+        autoComplete="off"
       />
       <Input
         key="amount"
@@ -161,7 +155,7 @@ const TransactionForm = (props) => {
         required={true}
         value={currentTransaction.amount}
         onChange={handleInputChange}
-        autocomplete="off"
+        autoComplete="off"
       />
       {hasAmountError && (
         <div style={{ color: "#bd2560", fontSize: "0.95rem" }}>
@@ -180,15 +174,13 @@ const TransactionForm = (props) => {
         required={true}
         value={currentTransaction.description}
         onChange={handleInputChange}
-        autocomplete="off"
+        autoComplete="off"
       />
       <Select
         label="Type"
         className="expense-select"
         variant="standard"
         color="deep-purple"
-        /* arrow={false}
-        disabled={currentTransaction.type === currentType ? true : false} */
         value={currentTransaction.type}
         style={{ borderBottom: "1px solid", background: "transparent" }}
         onChange={handleTypeChange}
@@ -196,21 +188,8 @@ const TransactionForm = (props) => {
         {typeList}
       </Select>
 
-      {/*  <Select
-        label="Category"
-        className="expense-select category"
-        variant="standard"
-        color="deep-purple"
-        style={{ borderBottom: "1px solid" }}
-        value={category}
-        onChange={handleCategoryChange}
-      >
-        {categoryList}
-      </Select> */}
-
       <CustomSelect
         categories={currentCategories}
-        // options={options}
         category={category}
         isEdited={isEdited}
         type={currentType}
@@ -229,22 +208,36 @@ const TransactionForm = (props) => {
         {walletList}
       </Select>
 
-      <Button
-        className={`mx-auto px-4 py-3 btn-submit ${
+      <div
+        className={`mx-auto px-8 py-3 flex gap-6 justify-center ${
           open && !isEdited ? "block" : "hidden"
         }`}
-        type="submit"
-        style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
       >
-        {`Add new ${currentType}`}
-      </Button>
+        <Button
+          className={`mx-auto px-8 py-3 btn-cancel`}
+          type="button"
+          style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
+          onClick={() => handleEdit(false)}
+        >
+          Cancel
+        </Button>
+
+        <Button
+          className={`mx-auto px-6 py-3 btn-submit`}
+          type="submit"
+          style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
+        >
+          Add new transaction
+        </Button>
+      </div>
+
       <div
-        className={`mx-auto px-4 py-3 flex gap-6 justify-center ${
+        className={`mx-auto px-8 py-3 flex gap-6 justify-center ${
           isEdited ? "flex" : "hidden"
         }`}
       >
         <Button
-          className={`mx-auto px-4 py-3 btn-cancel w-24`}
+          className={`mx-auto px-7 py-3 btn-cancel`}
           type="button"
           style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
           onClick={() => handleEdit(false)}
@@ -252,7 +245,7 @@ const TransactionForm = (props) => {
           Cancel
         </Button>
         <Button
-          className={`mx-auto px-4 py-3 btn-submit w-24`}
+          className={`mx-auto px-8 py-3 btn-submit w-28`}
           type="submit"
           style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
         >

@@ -1,4 +1,4 @@
-import { LOGIN, LOG_OUT } from "./type";
+import { LOGIN, LOG_OUT } from "../type";
 
 const authReducer = (state, action) => {
   const { type, payload } = action;

@@ -22,14 +22,18 @@ const AddingForm = (props) => {
     incomeCategories,
   } = useExpenseContext();
 
-  const [transaction, setTransaction] = useState(isEdited ? selectedTransaction :{
-    date: "",
-    amount: "",
-    description: "",
-    type: "",
-    category: "",
-    wallet: "",
-  });
+  const [transaction, setTransaction] = useState(
+    isEdited
+      ? selectedTransaction
+      : {
+          date: "",
+          amount: "",
+          description: "",
+          type: "",
+          category: "",
+          wallet: "",
+        }
+  );
 
   const [categories, setCategories] = useState([]);
   const onHandleClick = (type) => {
@@ -38,12 +42,6 @@ const AddingForm = (props) => {
       ? setCategories(incomeCategories)
       : setCategories(expenseCategories);
   };
-
-  // console.log(selectedTransaction);
-  /* const isIncomeType =
-    activeTabIndex === 0 ||
-    (selectedTransaction && selectedTransaction.type === INCOME); */
-  // console.log(isIncomeType && "Type is Income");
 
   const options =
     categories.length > 0 &&
@@ -69,20 +67,8 @@ const AddingForm = (props) => {
         style={{ backgroundColor: "transparent" }}
       >
         <DialogBody>
-          {/* <div className="justify-around flex flex-row gap-12 w-full label-container">
-            {expenseType.map((type) => {
-              return (
-                <button onClick={() => onHandleClick(type)}>{type}</button>
-              );
-            })}
-          </div>
-          <CustomSelect categories={categories} options={options} /> */}
           <TransactionForm
             transaction={isEdited ? selectedTransaction : transaction}
-            /*  categories={
-              activeTabIndex === 0 ? incomeCategories : expenseCategories
-            }
-            type={activeTabIndex === 0 ? INCOME : EXPENSE} */
           />
         </DialogBody>
       </Dialog>

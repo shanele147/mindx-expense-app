@@ -26,9 +26,9 @@ module.exports = withMT({
     fontFamily: {
       sans: ["Poppins", "sans-serif"],
     },
-    /* colors: {
-      "bg-purple": "#ae8cfa",
-    }, */
+    colors: {
+      "bg-expense": "#ae8cfa",
+    },
   },
   plugins: [],
 });

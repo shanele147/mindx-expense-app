@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import { useExpenseContext } from "../../contexts/ExpenseContext";
-// import { Input, Select, Option, Button } from "@material-tailwind/react";
+
 import "../../components/TransactionForm/TransactionForm.css";
-import { INCOME } from "../../utils/constants";
 
 const CustomSelect = (props) => {
   const { categories, category, isEdited, handleCategoryChange, type } = props;
@@ -15,28 +13,19 @@ const CustomSelect = (props) => {
       value: elm.toLowerCase(),
       color: "#455a64",
     }));
-    const catIndex =
+  const catIndex =
     options && options.findIndex((elm) => elm.label === category);
-    console.log({category, catIndex});
+  console.log({ category, catIndex });
 
   const [catValue, setCatValue] = useState(isEdited ? options[catIndex] : null);
   const [updateType, setType] = useState(type);
   const [isActive, setActive] = useState(false);
-
-  
 
   const optionStyles = {
     control: (styles) => ({
       ...styles,
       backgroundColor: "ffffff",
       border: 0,
-      /* borderBottom: "1px solid #455a64",
-      "&:hover": {
-        borderBottom: "1px solid #ae8cfa",
-      },
-      "&:focus": {
-        borderBottom: "1px solid #ae8cfa",
-      }, */
       borderRadius: "none",
       boxShadow: "none",
     }),
@@ -97,8 +86,9 @@ const CustomSelect = (props) => {
     outline: "none",
   };
 
-    useEffect(() => {
+  useEffect(() => {
     setType(type);
+    isEdited ? setCatValue(options[catIndex]) : setCatValue(null);
   }, [type]);
 
   return (
@@ -111,7 +101,7 @@ const CustomSelect = (props) => {
       <button
         type="button"
         className="peer w-full h-full peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal text-left outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all border-b text-sm pt-4 pb-1.5 border-blue-gray-200 expense-select"
-        style={{borderBottom: "1px solid" , background :"transparent"}}
+        style={{ borderBottom: "1px solid", background: "transparent" }}
         onClick={() => onHandleActive()}
       ></button>
       <label
@@ -132,7 +122,10 @@ const CustomSelect = (props) => {
           isSearchable={false}
           name="category"
           options={options}
-          placeholder={isEdited || catValue ? catValue : "Please select an item..."}
+          placeholder={
+            catValue === null && "Please select an item..."
+            // isEdited || catValue ? catValue : "Please select an item..."
+          }
           value={catValue}
           onChange={onHandleChange}
         />
