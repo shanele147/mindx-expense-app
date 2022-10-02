@@ -20,7 +20,7 @@ const LoginPage = (props) => {
     setLoginProgress(true);
     try {
       const loginRes = await AuthServices.login(values);
-      console.log(loginRes);
+  
       // loginRes.data contained the information of payload is : token & isAuthenticated
       setTimeout(() => {
         dispatch(actionCreator(LOGIN, loginRes.data));

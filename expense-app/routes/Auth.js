@@ -29,9 +29,10 @@ router.post('/login', (req, res) => {
         });
     }
 
-    return res.json({
+    return res.status(500).json({
         msg: "Password or username is not correct, please try again."
     });
 });
+
 router.post("/register", (req, res) => { });
 module.exports = router;

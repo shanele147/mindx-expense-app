@@ -3,8 +3,10 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const routes = require("./routes");
+const { clientMongoDB } = require("./config/db");
 const PORT = process.env.SERVER_PORT || 7777;
 
+clientMongoDB();
 app.use(express.json());
 app.use(cors("*"));
 
@@ -19,12 +21,13 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send(err.message)
 })
+
 app.listen(PORT, () => {
   console.log("Server is running at " + PORT);
 });
 
 /* Base API
-**Base URL: http://localhost:7777/api/v1
+**Base URL: http://localhost:3001/api/v1
 Set up API endpoint
 - Get all students:     GET baseURL/students
 - Get a student:        GET baseURL/students/:id
