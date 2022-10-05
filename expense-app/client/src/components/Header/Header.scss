@@ -18,6 +18,14 @@
   svg {
     color: var(--white-color);
   }
+  .btn-logout {
+    font-size: 1.75rem;
+    color: #ffaf1a;
+    opacity: .65;
+  }
+  .btn-logout:hover {
+    opacity: 1;
+  }
   .mobile-nav {
     height: 100% !important;
     opacity: 1 !important;

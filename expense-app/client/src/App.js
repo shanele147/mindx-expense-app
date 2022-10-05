@@ -5,16 +5,15 @@ import { ExpenseContext } from "./contexts/ExpenseContext";
 
 // COMPONENTS
 import HomePage from "./pages/HomePage/HomePage";
-import Header from "./components/Header";
 
 import "./App.css";
 import "./styles/main.scss";
 
-import { EXPENSE, INCOME } from "./utils/constants";
+import { EXPENSE, INCOME, EXPENSE_CAT, INCOME_CAT } from "./utils/constants";
 import AuthState from "./contexts/AuthState/AuthState";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import PageContainer from "./components/PageContainer/PageContainer";
+import RegisterPage from "./pages/RegisterPage/Register";
 
 function App() {
   const data = [
@@ -59,28 +58,8 @@ function App() {
   const [isEdited, setEdit] = useState(false);
   const [balance, setBalance] = useState(0);
   const [wallets, setWallets] = useState(["Bank", "Cash"]);
-  const [expenseCategories, setExpenseCategory] = useState([
-    "Beverage",
-    "Food",
-    "Shopping",
-    "Pet",
-    "Phone",
-    "Household",
-    "Bills",
-    "Education",
-    "Entertainment",
-    "Health",
-    "Travel",
-    "Transportation",
-    "Others",
-  ]);
-  const [incomeCategories, setIncomeCategory] = useState([
-    "Salary",
-    "Awards",
-    "Bonus",
-    "Lottery",
-    "Investment",
-  ]);
+  const [expenseCategories, setExpenseCategory] = useState(EXPENSE_CAT);
+  const [incomeCategories, setIncomeCategory] = useState(INCOME_CAT);
   const [expenseType, setExpenseType] = useState([INCOME, EXPENSE]);
   const [transactionList, setTransactionList] = useState(data);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
@@ -115,7 +94,6 @@ function App() {
     (total, elm) => total + Number(elm),
     0
   );
-  // console.log({ incomeList, expenseList });
 
   // adding new transaction
   const onUpdateTransactionList = (newTransaction) => {
@@ -199,7 +177,7 @@ function App() {
               element={<PrivateRoute component={HomePage} />}
             />
             <Route path="/login" element={<LoginPage />} />
-            {/* <Route path="/register" element={<Register />} /> */}
+            <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </ExpenseContext.Provider>
       </AuthState>

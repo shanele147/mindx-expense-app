@@ -2,10 +2,11 @@ import { LOGIN, LOG_OUT } from "../type";
 
 const authReducer = (state, action) => {
   const { type, payload } = action;
+  // console.log(payload);
   switch (type) {
     case LOGIN: {
       const { token, isAuthenticated } = payload;
-      console.log({ token });
+      console.log({ token, isAuthenticated });
       localStorage.setItem("token", token);
       return {
         ...state,

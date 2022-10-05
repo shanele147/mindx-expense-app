@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ItemLinks from "./ItemLinks";
 import {
   Navbar,
@@ -7,14 +7,30 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
+import { MdLogout } from "react-icons/md";
+
+// COMPONENTS
 import { useExpenseContext } from "../../contexts/ExpenseContext";
+import AuthContext from "../../contexts/AuthState/AuthContext";
 import expenseAppService from "../../services/expenseAppService";
 import AddingForm from "../AddingForm";
+
+// STYLE
 import "./Header.scss";
+import actionCreator from "../../utils/actionCreator";
+import { LOG_OUT } from "../../contexts/type";
+
 
 const Header = () => {
-  const { open, isEdited, balance, handleOpen, handleEdit } =
+  const { open, isEdited, balance, handleOpen } =
     useExpenseContext();
+  const {state, dispatch} = useContext(AuthContext);
+  const {isAuthenticated} = state;
+  // console.log(isAuthenticated)
+
+  const onLogoutHandler = () => {
+    dispatch(actionCreator(LOG_OUT, null));
+  }
 
   const { openNav, setOpenNav } = useState(false);
   useEffect(() => {
@@ -28,7 +44,7 @@ const Header = () => {
     <ul className="mb-2 md\:mb-4 mt-2 md\:mt-2 flex gap-2 md:mb-0 md:mt-0 md:flex-row md:items-center md:gap-8 nav-list justify-around">
       <ItemLinks url="./" itemName="home" tooltips="Homepage">
         <p className="hidden 2xl:inline-block">Homepage</p>
-        <img
+        <img alt="Homepage"
           className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/home-icon.png"
         ></img>
@@ -39,7 +55,7 @@ const Header = () => {
         tooltips="Categories Page"
       >
         <p className="hidden 2xl:inline-block">Categories</p>
-        <img
+        <img alt="Categories"
           className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/categories-icon.png"
         ></img>
@@ -50,25 +66,30 @@ const Header = () => {
         tooltips="Transactions Page"
       >
         <p className="hidden 2xl:inline-block">Transactions</p>
-        <img
+        <img alt="Transactions"
           className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/transaction-icon.png"
         ></img>
       </ItemLinks>
       <ItemLinks url="wallets" itemName="wallets" tooltips="Wallets Page">
         <p className="hidden 2xl:inline-block">Wallets</p>
-        <img
+        <img alt="Wallets Page"
           className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/wallet-icon.png"
         ></img>
       </ItemLinks>
-      <ItemLinks url="login" itemName="login" tooltips="LogIn">
-        <p className="hidden 2xl:inline-block">LogIn</p>
-        <img
+      {!isAuthenticated? ( <ItemLinks url="login" itemName="login" tooltips="LogIn">
+        <p className="hidden 2xl:inline-block">Login</p>
+        <img alt="Login"
           className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/login-icon.png"
         ></img>
-      </ItemLinks>
+      </ItemLinks>) : (
+      <ItemLinks url="login" itemName="logout" tooltips="LogOut">
+      <p className="hidden 2xl:inline-block">Logout</p>
+      <MdLogout className="btn-logout transition duration-200" onClick={() => onLogoutHandler()}/>
+    </ItemLinks>)}
+     
     </ul>
   );
 

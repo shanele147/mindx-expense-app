@@ -9,6 +9,9 @@ const AuthServices = {
   login: (authInfo) => {
     return axiosInstance.post("/auth/login", authInfo);
   },
+  register: (userInfo) => {
+    return axiosInstance.post("/users", userInfo);
+  }
 };
 
 export default AuthServices;

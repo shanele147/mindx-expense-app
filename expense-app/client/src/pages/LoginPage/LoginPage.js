@@ -6,7 +6,7 @@ import AuthContext from "../../contexts/AuthState/AuthContext";
 import { LOGIN } from "../../contexts/type";
 import actionCreator from "../../utils/actionCreator";
 
-import "./LoginForm.css";
+import "./LoginPage.css";
 
 const LoginPage = (props) => {
   const [loginError, setLoginError] = useState(null);
@@ -20,7 +20,6 @@ const LoginPage = (props) => {
     setLoginProgress(true);
     try {
       const loginRes = await AuthServices.login(values);
-  
       // loginRes.data contained the information of payload is : token & isAuthenticated
       setTimeout(() => {
         dispatch(actionCreator(LOGIN, loginRes.data));

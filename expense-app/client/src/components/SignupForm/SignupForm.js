@@ -1,17 +1,21 @@
-import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import React, {useState} from 'react';
+import {useNavigate} from "react-router-dom";
+
 import {
-  Input,
-  Button
-} from "@material-tailwind/react";
+    Input,
+    Button
+  } from "@material-tailwind/react";
+
 import "../../components/TransactionForm/TransactionForm.css";
 
-const LoginForm = (props) => {
+const SignupForm = (props) => {
   const { onSubmit, inProgress, error } = props;
   const [submitValue, setSubmitValue] = useState({
     username: "",
     password: "",
+    email: "",
   });
+  const navigate = useNavigate();
 
   const onFinish = async (e) => {
     e.preventDefault();
@@ -19,6 +23,7 @@ const LoginForm = (props) => {
     setSubmitValue({
       username: "",
       password: "",
+      email: "",
     });
   };
 
@@ -33,7 +38,7 @@ const LoginForm = (props) => {
       <div className="w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center md:text-2xl lg:text-3xl font-bold tracking-tight text-white">
-            Log in to your account
+            Sign in your account
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={onFinish}>
@@ -65,24 +70,38 @@ const LoginForm = (props) => {
             onChange={handleInputChange}
             autoComplete="off"
           />
+          <Input
+            key="email"
+            label="Email"
+            name="email"
+            type="email"
+            className="expense-input"
+            color="deep-purple"
+            size="lg"
+            variant="standard"
+            required={true}
+            value={submitValue.email}
+            onChange={handleInputChange}
+            autoComplete="off"
+          />
           {error && (
             <div style={{ color: "#bd2560", fontSize: "0.95rem" }}>{error}</div>
           )}
 
-          <div className="w-full flex flex-col gap-8 justify-center items-center text-center">
+          <div className="w-full flex flex-row justify-center items-center">
             <Button
               className={` mt-12 sm:px-6 md:px-10 lg:px-16 py-3 btn-submit`}
               type="submit"
               style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
             >
-              {inProgress ? "Submitting..." : "Login"}
+              Register
             </Button>
-            <h3>If you don't have account, <br/>please register <Link to="/register" style={{color: "var(--active-color)"}}>here</Link></h3>
+            
           </div>
         </form>
       </div>
     </div>
   );
-};
+}
 
-export default LoginForm;
+export default SignupForm

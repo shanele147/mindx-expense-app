@@ -1,5 +1,23 @@
 export const INCOME = "income";
 export const EXPENSE = "expense";
+export const EXPENSE_CAT = [ "Beverage",
+"Food",
+"Shopping",
+"Pet",
+"Phone",
+"Household",
+"Bills",
+"Education",
+"Entertainment",
+"Health",
+"Travel",
+"Transportation",
+"Others"];
+export const INCOME_CAT = ["Salary",
+"Awards",
+"Bonus",
+"Lottery",
+"Investment"];
 export const chartColors = {
     backgroundColor: [
         "rgb(41, 184, 255, 0.2)",
