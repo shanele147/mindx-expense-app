@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
-import {
-  Input,
-  Button
-} from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+import { Input, Button } from "@material-tailwind/react";
 import "../../components/TransactionForm/TransactionForm.css";
 
 const LoginForm = (props) => {
@@ -13,20 +10,15 @@ const LoginForm = (props) => {
     password: "",
   });
 
-  const onFinish = async (e) => {
+  const onFinish = (e) => {
     e.preventDefault();
     onSubmit(submitValue);
-    setSubmitValue({
-      username: "",
-      password: "",
-    });
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSubmitValue({ ...submitValue, [name]: value });
   };
-
 
   return (
     <div className="sm:w-full md:w-1/2 m-auto flex min-h-full h-full items-center justify-center py-20 px-6 md:px-10 lg:px-8 login-form">
@@ -77,7 +69,13 @@ const LoginForm = (props) => {
             >
               {inProgress ? "Submitting..." : "Login"}
             </Button>
-            <h3>If you don't have account, <br/>please register <Link to="/register" style={{color: "var(--active-color)"}}>here</Link></h3>
+            <h3>
+              If you don't have account, <br />
+              please register{" "}
+              <Link to="/register" style={{ color: "var(--active-color)" }}>
+                here
+              </Link>
+            </h3>
           </div>
         </form>
       </div>

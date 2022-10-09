@@ -1,12 +1,11 @@
+const { response } = require("express");
 const express = require("express");
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const USERNAME = process.env.BASIC_USERNAME;
-const PASSWORD = process.env.BASIC_PASSWORD;
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-const JWT_EXPIRED_TIME = process.env.JWT_EXPIRED_TIME;
+// const jwt = require('jsonwebtoken');
+const AuthController = require('../controllers/AuthController');
 
-router.post('/login', (req, res) => {
+
+router.post('/login', async (req, res, next) => {
     console.log({ body: req.body })
     const { username, password } = req.body;
 
@@ -15,25 +14,14 @@ router.post('/login', (req, res) => {
             msg: "Missing required keys",
         });
     }
-    if (username === USERNAME && password === PASSWORD) {
-        const token = jwt.sign({
-            fullname: "Shane Le",
-            role: "admin"
-        },
-            JWT_SECRET_KEY,
-            { expiresIn: JWT_EXPIRED_TIME }
-        );
-        return res.status(200).json({
-            msg: "Login successfully!",
-            token,
-            isAuthenticated: true,
-        });
+    
+    try{
+        const loginResponse = await AuthController.Login({username, password});
+        return res.status(200).json(loginResponse);
     }
-
-    return res.status(500).json({
-        msg: "Password or username is not correct, please try again."
-    });
+    catch(err){
+        next(err);
+    }
 });
 
-router.post("/register", (req, res) => { });
 module.exports = router;

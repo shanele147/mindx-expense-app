@@ -52,7 +52,7 @@ const ExpenseTabs = () => {
                 }`}
               >
                 {tab.content}
-                <Doughnut data={tab.chartData} options={options} />
+                <Doughnut data={tab.chartData} options={options} className="mb-16"/>
               </div>
             );
           })}

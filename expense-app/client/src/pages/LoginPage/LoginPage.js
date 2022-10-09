@@ -7,6 +7,7 @@ import { LOGIN } from "../../contexts/type";
 import actionCreator from "../../utils/actionCreator";
 
 import "./LoginPage.css";
+import PageContainer from "../../components/PageContainer/PageContainer.js";
 
 const LoginPage = (props) => {
   const [loginError, setLoginError] = useState(null);
@@ -25,23 +26,28 @@ const LoginPage = (props) => {
         dispatch(actionCreator(LOGIN, loginRes.data));
         setLoginProgress(false);
         navigate("/");
-      }, 2000);
+      }, 1000);
     } catch (err) {
       setLoginError(err.response.data.msg);
-      setTimeout(() => {
+      console.log(loginError);
+      setLoginProgress(false);
+
+      // set demo for loading after submitting
+      /* setTimeout(() => {
         console.log(loginError);
-        // set demo for loading after submitting
         setLoginProgress(false);
-      }, 2000);
+      }, 2000); */
     }
   };
 
   return (
+    // <PageContainer>
     <LoginForm
       onSubmit={onLoginHandler}
       inProgress={loginInProgress}
       error={loginError}
     />
+    // </PageContainer>
   );
 };
 

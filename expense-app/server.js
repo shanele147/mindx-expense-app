@@ -16,10 +16,11 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1", routes);
 
-
+// CATCH THE ERROR AND SEND TO CLIENT
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send(err.message)
+  console.log(err);
+  res.status(500).send(err.message);
 })
 
 app.listen(PORT, () => {

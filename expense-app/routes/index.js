@@ -2,6 +2,7 @@ const express = require("express");
 
 const studentRouter = require("./Students");
 const teacherRouter = require("./Teachers");
+const usersRouter = require("./Users");
 const expenseRouter = require("./Expense");
 const authMdw = require("../middlewares/Auth");
 const authRouter = require("./Auth");
@@ -17,6 +18,7 @@ router.use(apiLogger);
 router.use("/auth", authRouter);
 router.use("/students", authMdw, studentRouter);
 router.use("/teachers", teacherRouter);
+router.use("/users", usersRouter);
 router.use("/expense", expenseRouter);
 
 

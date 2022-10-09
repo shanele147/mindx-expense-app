@@ -15,11 +15,14 @@ const RegisterPage = () => {
     setSignupProgress(true);
     try {
       const signRes = await AuthServices.register(values);
+      console.log(signRes);
+
       setTimeout(() => {
         setSignupProgress(false);
         navigate("/login");
       }, 2000);
     } catch (err) {
+      setSignupError(err.response.data.msg);
       console.log(err);
     }
   };

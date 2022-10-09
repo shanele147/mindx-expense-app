@@ -12,6 +12,7 @@ const clientMongoDB = async () => {
     console.log("DB connected successfully");
     const dbInstance = client.db(DB_NAME);
     db.expense = dbInstance.collection("expense");
+    db.users = dbInstance.collection("users");
   } catch (e) {
     console.error(e);
   }

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
 
 import {
     Input,
@@ -15,7 +14,6 @@ const SignupForm = (props) => {
     password: "",
     email: "",
   });
-  const navigate = useNavigate();
 
   const onFinish = async (e) => {
     e.preventDefault();
@@ -38,7 +36,7 @@ const SignupForm = (props) => {
       <div className="w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center md:text-2xl lg:text-3xl font-bold tracking-tight text-white">
-            Sign in your account
+            Sign up your account
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={onFinish}>
