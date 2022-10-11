@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Browser, Routes, Route } from "react-router-dom";
 
+// CONTEXT
+import AuthState from "./contexts/AuthState/AuthState";
 import { ExpenseContext } from "./contexts/ExpenseContext";
 
 // COMPONENTS
 import HomePage from "./pages/HomePage/HomePage";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import SigninPage from "./pages/SigninPage/SigninPage";
+import RegisterPage from "./pages/RegisterPage/Register";
 
 import "./App.css";
 import "./styles/main.scss";
 
+// UTILS & SERVICES
 import { EXPENSE, INCOME, EXPENSE_CAT, INCOME_CAT } from "./utils/constants";
-import AuthState from "./contexts/AuthState/AuthState";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import RegisterPage from "./pages/RegisterPage/Register";
+import DataServices from "./services/dataService";
 
 function App() {
+  const [result, setResult] = useState(null);
+
+  const fetchData = async () => {
+    const data = await DataServices.getTransactionData();
+    setResult(data);
+    console.log(result);
+  };
+
   const data = [
     {
       id: 1,
@@ -71,29 +82,25 @@ function App() {
 
   const incomeList = transactionList.filter((elm) => elm.type === INCOME);
   const expenseList = transactionList.filter((elm) => elm.type === EXPENSE);
-
-  const getCategoryTotalAmount = (category, list) => {
-    return list
-      .filter((elm) => elm.category === category)
-      .reduce((total, elm) => total + Number(elm.amount), 0);
-  };
-
   const expenseBasedOnCategory = expenseCategories.map((cat) =>
     getCategoryTotalAmount(cat, expenseList)
   );
-
   const incomeBasedOnCategory = incomeCategories.map((cat) =>
     getCategoryTotalAmount(cat, incomeList)
   );
 
-  let expenseTotalAmount = expenseBasedOnCategory.reduce(
-    (total, elm) => total + Number(elm),
-    0
-  );
-  let incomeTotalAmount = incomeBasedOnCategory.reduce(
-    (total, elm) => total + Number(elm),
-    0
-  );
+  // METHODS
+  // using function for JS hoisting
+  function getCategoryTotalAmount(category, list) {
+    return list
+      .filter((elm) => elm.category === category)
+      .reduce((total, elm) => total + Number(elm.amount), 0);
+  }
+  const getTotalBasedOnCategoryType = (categoryList, list) => {
+    return categoryList
+      .map((category) => getCategoryTotalAmount(category, list))
+      .reduce((total, elm) => total + Number(elm), 0);
+  };
 
   // adding new transaction
   const onUpdateTransactionList = (newTransaction) => {
@@ -140,7 +147,15 @@ function App() {
   };
 
   useEffect(() => {
-    setBalance(incomeTotalAmount - expenseTotalAmount);
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setBalance(
+      getTotalBasedOnCategoryType(incomeCategories, incomeList) -
+        getTotalBasedOnCategoryType(expenseCategories, expenseList)
+    );
+    // setBalance(incomeTotalAmount - expenseTotalAmount);
   }, [transactionList]);
 
   return (
@@ -170,13 +185,9 @@ function App() {
             handleEdit,
           }}
         >
-          
           <Routes>
-            <Route
-              path="/"
-              element={<PrivateRoute component={HomePage} />}
-            />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<PrivateRoute component={HomePage} />} />
+            <Route path="/login" element={<SigninPage />} />
             <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </ExpenseContext.Provider>

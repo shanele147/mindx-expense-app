@@ -20,17 +20,15 @@ import "./Header.scss";
 import actionCreator from "../../utils/actionCreator";
 import { LOG_OUT } from "../../contexts/type";
 
-
 const Header = () => {
-  const { open, isEdited, balance, handleOpen } =
-    useExpenseContext();
-  const {state, dispatch} = useContext(AuthContext);
-  const {isAuthenticated} = state;
-  // console.log(isAuthenticated)
+  const { open, isEdited, balance, handleOpen } = useExpenseContext();
+  const { state, dispatch } = useContext(AuthContext);
+  const { isAuthenticated, user } = state;
+  // console.log(state);
 
   const onLogoutHandler = () => {
     dispatch(actionCreator(LOG_OUT, null));
-  }
+  };
 
   const { openNav, setOpenNav } = useState(false);
   useEffect(() => {
@@ -44,7 +42,8 @@ const Header = () => {
     <ul className="mb-2 md\:mb-4 mt-2 md\:mt-2 flex gap-2 md:mb-0 md:mt-0 md:flex-row md:items-center md:gap-8 nav-list justify-around">
       <ItemLinks url="./" itemName="home" tooltips="Homepage">
         <p className="hidden 2xl:inline-block">Homepage</p>
-        <img alt="Homepage"
+        <img
+          alt="Homepage"
           className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/home-icon.png"
         ></img>
@@ -55,7 +54,8 @@ const Header = () => {
         tooltips="Categories Page"
       >
         <p className="hidden 2xl:inline-block">Categories</p>
-        <img alt="Categories"
+        <img
+          alt="Categories"
           className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/categories-icon.png"
         ></img>
@@ -66,30 +66,30 @@ const Header = () => {
         tooltips="Transactions Page"
       >
         <p className="hidden 2xl:inline-block">Transactions</p>
-        <img alt="Transactions"
+        <img
+          alt="Transactions"
           className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/transaction-icon.png"
         ></img>
       </ItemLinks>
       <ItemLinks url="wallets" itemName="wallets" tooltips="Wallets Page">
         <p className="hidden 2xl:inline-block">Wallets</p>
-        <img alt="Wallets Page"
+        <img
+          alt="Wallets Page"
           className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
           src="./icons/wallet-icon.png"
         ></img>
       </ItemLinks>
-      {!isAuthenticated? ( <ItemLinks url="login" itemName="login" tooltips="LogIn">
-        <p className="hidden 2xl:inline-block">Login</p>
-        <img alt="Login"
-          className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
-          src="./icons/login-icon.png"
-        ></img>
-      </ItemLinks>) : (
-      <ItemLinks url="login" itemName="logout" tooltips="LogOut">
-      <p className="hidden 2xl:inline-block">Logout</p>
-      <MdLogout className="btn-logout transition duration-200" onClick={() => onLogoutHandler()}/>
-    </ItemLinks>)}
-     
+      {isAuthenticated && (
+        <ItemLinks url="login" itemName="login" tooltips="LogIn">
+          <p className="hidden 2xl:inline-block">Login</p>
+          <img
+            alt="Login"
+            className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
+            src="./icons/login-icon.png"
+          ></img>
+        </ItemLinks>
+      )}
     </ul>
   );
 
@@ -104,23 +104,25 @@ const Header = () => {
         <div className="container mx-auto flex items-center justify-between ">
           <div className="hidden md:block">{navList}</div>
           <div className="hidden nav-container_logo w-full md:w-2/5 md:flex items-center md:justify-end md:gap-2 lg:gap-6">
-            <div className="flex flex-wrap justify-around items-baseline">
-              <h3 className="text-sm md:text-base lg:text-lg text-white">
-                Balance:&nbsp;
-              </h3>
-              <h3 className="balance">
-                {expenseAppService.convertCurrency(balance, "USD")}
-              </h3>
+            <div className="flex flex-wrap justify-around items-center gap-4">
+              <div className="flex flex-col items-end">
+                <p>{user}</p>
+                {/*  <p className="text-sm md:text-base lg:text-lg text-white">
+                  Balance:&nbsp;
+                </p> */}
+                <p className="balance">
+                  {expenseAppService.convertCurrency(balance, "USD")}
+                </p>
+              </div>
+              <IconButton
+                className="btn-add-expense"
+                ripple={true}
+                size="lg"
+                onClick={handleOpen}
+              >
+                <span>+</span>
+              </IconButton>
             </div>
-
-            <IconButton
-              className="btn-add-expense"
-              ripple={true}
-              size="lg"
-              onClick={handleOpen}
-            >
-              <span>+</span>
-            </IconButton>
           </div>
           {/* <IconButton
             variant="text"
@@ -172,11 +174,11 @@ const Header = () => {
       <div
         className={`mobile-balance flex flex-wrap justify-between items-center pt-5 md:pt-8 px-4 md:px-8 pb-0 lg:px-20 md:hidden transition-all duration-300`}
       >
-        <div className="flex flex-wrap justify-around items-baseline">
-          <h3 className="text-base text-white">Balance:&nbsp;</h3>
-          <h3 className="balance">
+        <div className="flex flex-col justify-around items-baseline">
+          <p className="text-base text-white">{user}</p>
+          <p className="balance">
             {expenseAppService.convertCurrency(balance, "USD")}
-          </h3>
+          </p>
         </div>
         <IconButton
           className="btn-add-expense"

@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
-
 const { db } = require("../config/db");
 
-router.get("/", async (req,res) => {
-  const expense = await db.expense.find().toArray();
-  console.log(expense);
+router.get("/", async (req, res) => {
+  const transactions = await db.transactions.find().toArray();
+  console.log(transactions);
   res.status(200).json({
-    msh: "Get MongoDB expense successfully",
-    data: expense,
+    msg: "Get transactions successfully",
+    data: transactions,
   });
 });
 

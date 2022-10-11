@@ -5,13 +5,15 @@ const authReducer = (state, action) => {
   // console.log(payload);
   switch (type) {
     case LOGIN: {
-      const { token, isAuthenticated } = payload;
-      console.log({ token, isAuthenticated });
+      const { token, isAuthenticated, user } = payload;
+      // console.log({ token, isAuthenticated, user });
       localStorage.setItem("token", token);
+      localStorage.setItem("user", user);
       return {
         ...state,
         token: token,
         isAuthenticated: isAuthenticated,
+        user: user,
       };
     }
     case LOG_OUT: {
@@ -21,6 +23,7 @@ const authReducer = (state, action) => {
         ...state,
         token: null,
         isAuthenticated: false,
+        user: null,
       };
     }
     default:

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthState/AuthContext";
-import AuthServices from "../../services/authService";
+import DataServices from "../../services/dataService";
 import SignupForm from "../../components/SignupForm/SignupForm";
 
 const RegisterPage = () => {
@@ -14,7 +14,7 @@ const RegisterPage = () => {
   const onSignupHandler = async (values) => {
     setSignupProgress(true);
     try {
-      const signRes = await AuthServices.register(values);
+      const signRes = await DataServices.register(values);
       console.log(signRes);
 
       setTimeout(() => {
