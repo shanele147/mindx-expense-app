@@ -27,7 +27,7 @@ const SigninPage = (props) => {
         dispatch(actionCreator(LOGIN, loginRes.data));
         setLoginProgress(false);
         navigate("/");
-      }, 1000);
+      }, 1500);
     } catch (err) {
       setTimeout(() => {
         console.log(err);
@@ -38,13 +38,11 @@ const SigninPage = (props) => {
   };
 
   return (
-    // <PageContainer>
     <SigninForm
       onSubmit={onLoginHandler}
       inProgress={loginInProgress}
       error={loginError}
     />
-    // </PageContainer>
   );
 };
 

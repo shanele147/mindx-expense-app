@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Input, Button } from "@material-tailwind/react";
 import "../../components/TransactionForm/TransactionForm.css";
+import Loading from "../Loading/Loading";
 
 const LoginForm = (props) => {
   const { onSubmit, inProgress, error } = props;
@@ -61,22 +62,26 @@ const LoginForm = (props) => {
             <div style={{ color: "#bd2560", fontSize: "0.95rem" }}>{error}</div>
           )}
 
-          <div className="w-full flex flex-col gap-8 justify-center items-center text-center">
-            <Button
-              className={` mt-12 sm:px-6 md:px-10 lg:px-16 py-3 btn-submit`}
-              type="submit"
-              style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
-            >
-              {inProgress ? "Submitting..." : "Login"}
-            </Button>
-            <h3>
-              If you don't have account, <br />
-              please register{" "}
-              <Link to="/register" style={{ color: "var(--active-color)" }}>
-                here
-              </Link>
-            </h3>
-          </div>
+          {inProgress ? (
+            <Loading />
+          ) : (
+            <div className="w-full flex flex-col gap-8 justify-center items-center text-center">
+              <Button
+                className={` mt-12 sm:px-6 md:px-10 lg:px-16 py-3 btn-submit`}
+                type="submit"
+                style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
+              >
+                Login
+              </Button>
+              <h3>
+                If you don't have account, <br />
+                please register{" "}
+                <Link to="/register" style={{ color: "var(--active-color)" }}>
+                  here
+                </Link>
+              </h3>
+            </div>
+          )}
         </form>
       </div>
     </div>

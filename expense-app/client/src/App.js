@@ -10,78 +10,51 @@ import HomePage from "./pages/HomePage/HomePage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import SigninPage from "./pages/SigninPage/SigninPage";
 import RegisterPage from "./pages/RegisterPage/Register";
+import Loading from "./components/Loading/Loading";
 
 import "./App.css";
 import "./styles/main.scss";
 
 // UTILS & SERVICES
-import { EXPENSE, INCOME, EXPENSE_CAT, INCOME_CAT } from "./utils/constants";
+import { EXPENSE, INCOME } from "./utils/constants";
 import DataServices from "./services/dataService";
 
 function App() {
-  const [result, setResult] = useState(null);
-
-  const fetchData = async () => {
-    const data = await DataServices.getTransactionData();
-    setResult(data);
-    console.log(result);
-  };
-
-  const data = [
-    {
-      id: 1,
-      date: "2022-08-01",
-      amount: "1000",
-      category: "Bonus",
-      description: "July overtime working",
-      type: INCOME,
-      wallet: "Bank",
-    },
-    {
-      id: 2,
-      date: "2022-08-13",
-      amount: "400",
-      category: "Food",
-      description: "Dinner with friends",
-      type: EXPENSE,
-      wallet: "Bank",
-    },
-    {
-      id: 3,
-      date: "2022-08-02",
-      amount: "150",
-      category: "Shopping",
-      description: "Weekend super market",
-      type: EXPENSE,
-      wallet: "Bank",
-    },
-    {
-      id: 4,
-      date: "2022-08-18",
-      amount: "50",
-      category: "Food",
-      description: "Hangout weekend",
-      type: EXPENSE,
-      wallet: "Bank",
-    },
-  ];
-  const [open, setOpen] = useState(false);
+  // APP STATE
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [isEdited, setEdit] = useState(false);
   const [balance, setBalance] = useState(0);
   const [wallets, setWallets] = useState(["Bank", "Cash"]);
-  const [expenseCategories, setExpenseCategory] = useState(EXPENSE_CAT);
-  const [incomeCategories, setIncomeCategory] = useState(INCOME_CAT);
   const [expenseType, setExpenseType] = useState([INCOME, EXPENSE]);
-  const [transactionList, setTransactionList] = useState(data);
+  const [expenseCategories, setExpenseCategory] = useState([]);
+  const [incomeCategories, setIncomeCategory] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+
+  // fetch app data
+  const fetchData = async () => {
+    setLoading(true);
+    const result = await DataServices.getData();
+    // console.log(result[0].category);
+    const dataList = [...result[0].transactions, ...result[1].transactions];
+    setTransactions(dataList);
+    setIncomeCategory(result[0].category);
+    setExpenseCategory(result[1].category);
+    setLoading(false);
+  };
+
+  console.log(loading);
   // handle expense tabs open state
+  const [open, setOpen] = useState(false);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const handleTabIndex = (id) => {
     setActiveTabIndex(id);
   };
 
-  const incomeList = transactionList.filter((elm) => elm.type === INCOME);
-  const expenseList = transactionList.filter((elm) => elm.type === EXPENSE);
+  const incomeList =
+    transactions && transactions.filter((elm) => elm.type === INCOME);
+  const expenseList =
+    transactions && transactions.filter((elm) => elm.type === EXPENSE);
   const expenseBasedOnCategory = expenseCategories.map((cat) =>
     getCategoryTotalAmount(cat, expenseList)
   );
@@ -92,9 +65,12 @@ function App() {
   // METHODS
   // using function for JS hoisting
   function getCategoryTotalAmount(category, list) {
-    return list
-      .filter((elm) => elm.category === category)
-      .reduce((total, elm) => total + Number(elm.amount), 0);
+    return (
+      list &&
+      list
+        .filter((elm) => elm.category === category)
+        .reduce((total, elm) => total + Number(elm.amount), 0)
+    );
   }
   const getTotalBasedOnCategoryType = (categoryList, list) => {
     return categoryList
@@ -108,17 +84,17 @@ function App() {
     try {
       if (!isEdited) {
         console.log("Add new transaction");
-        setTransactionList([...transactionList, newTransaction]);
+        setTransactions([...transactions, newTransaction]);
       } else {
         console.log("Update transaction");
-        const selectedInx = transactionList.findIndex(
+        const selectedInx = transactions.findIndex(
           (transaction) => transaction.id === selectedTransaction.id
         );
-        transactionList[selectedInx] = {
+        transactions[selectedInx] = {
           ...selectedTransaction,
           ...newTransaction,
         };
-        setTransactionList([...transactionList]);
+        setTransactions([...transactions]);
       }
     } catch (err) {
       console.log(err);
@@ -126,18 +102,18 @@ function App() {
   };
 
   const onDeleteTransaction = (id) => {
-    const filteredTransaction = transactionList.filter(
+    const filteredTransaction = transactions.filter(
       (transaction) => transaction.id !== id
     );
-    setTransactionList(filteredTransaction);
+    setTransactions(filteredTransaction);
   };
 
   const onEditTransaction = (id) => {
-    const selectedIdx = transactionList.findIndex(
+    const selectedIdx = transactions.findIndex(
       (transaction) => transaction.id === id
     );
     handleEdit(true);
-    setSelectedTransaction(transactionList[selectedIdx]);
+    setSelectedTransaction(transactions[selectedIdx]);
   };
 
   const handleOpen = (value) => setOpen(value);
@@ -149,14 +125,14 @@ function App() {
   useEffect(() => {
     fetchData();
   }, []);
+  transactions.length > 0 && console.log(transactions);
 
   useEffect(() => {
     setBalance(
       getTotalBasedOnCategoryType(incomeCategories, incomeList) -
         getTotalBasedOnCategoryType(expenseCategories, expenseList)
     );
-    // setBalance(incomeTotalAmount - expenseTotalAmount);
-  }, [transactionList]);
+  }, [transactions]);
 
   return (
     <Browser>
@@ -164,13 +140,14 @@ function App() {
         <ExpenseContext.Provider
           value={{
             open,
+            loading,
             isEdited,
             balance,
             wallets,
             expenseCategories,
             incomeCategories,
             expenseType,
-            transactionList,
+            transactions,
             selectedTransaction,
             incomeList,
             expenseList,
@@ -186,7 +163,13 @@ function App() {
           }}
         >
           <Routes>
-            <Route path="/" element={<PrivateRoute component={HomePage} />} />
+            <Route
+              path="/"
+              element={<PrivateRoute component={HomePage} />}
+              /* element={
+                loading ? <Loading /> : <PrivateRoute component={HomePage} />
+              } */
+            />
             <Route path="/login" element={<SigninPage />} />
             <Route path="/register" element={<RegisterPage />} />
           </Routes>

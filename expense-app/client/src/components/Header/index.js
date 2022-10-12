@@ -81,13 +81,15 @@ const Header = () => {
         ></img>
       </ItemLinks>
       {isAuthenticated && (
-        <ItemLinks url="login" itemName="login" tooltips="LogIn">
-          <p className="hidden 2xl:inline-block">Login</p>
-          <img
-            alt="Login"
-            className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
-            src="./icons/login-icon.png"
-          ></img>
+        <ItemLinks url="login" itemName="signout" tooltips="Sign out">
+          <p className="hidden 2xl:inline-block">Sign out</p>
+          <button onClick={() => onLogoutHandler()}>
+            <img
+              alt="Sign out"
+              className="w-8 sm:w-10 xl:w-12 2xl:hidden nav-icon"
+              src="./icons/signout-icon.png"
+            ></img>
+          </button>
         </ItemLinks>
       )}
     </ul>

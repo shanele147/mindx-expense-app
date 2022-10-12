@@ -3,7 +3,7 @@ const express = require("express");
 const studentRouter = require("./Students");
 const teacherRouter = require("./Teachers");
 const usersRouter = require("./Users");
-const transactionsRouter = require("./Transactions");
+const appRouter = require("./ExpenseData");
 const authMdw = require("../middlewares/Auth");
 const authRouter = require("./Auth");
 
@@ -19,7 +19,7 @@ router.use("/auth", authRouter);
 router.use("/students", authMdw, studentRouter);
 router.use("/teachers", teacherRouter);
 router.use("/users", usersRouter);
-router.use("/transactions", transactionsRouter);
+router.use("/expense-app", appRouter);
 
 // If only want to use middleware for some specific API => use in block
 // router.use("/students", apiLogger, studentRouter);

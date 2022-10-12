@@ -17,8 +17,9 @@ const authReducer = (state, action) => {
       };
     }
     case LOG_OUT: {
-      console.log("I am in logout function");
+      // console.log("I am in logout function");
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       return {
         ...state,
         token: null,
