@@ -18,17 +18,15 @@ app.use("/api/v1", routes);
 
 // CATCH THE ERROR AND SEND TO CLIENT
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  console.log(err);
-  res.status(500).send(err.message);
-})
+  res.status(500).send(err);
+});
 
 app.listen(PORT, () => {
   console.log("Server is running at " + PORT);
 });
 
 /* Base API
-**Base URL: http://localhost:3001/api/v1
+**Base URL: http://localhost:3008/api/v1
 Set up API endpoint
 - Get all students:     GET baseURL/students
 - Get a student:        GET baseURL/students/:id

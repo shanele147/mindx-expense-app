@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
+import AuthServices from "../../services/authService";
 import AuthContext from "./AuthContext";
 import authReducer from "./AuthReducer";
 
@@ -11,6 +12,15 @@ const initialState = {
 
 const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  // console.log(state);
+
+  const setAuthToken = async () => {
+    const userInfo = await AuthServices.verifyToken();
+  };
+
+  useEffect(() => {
+    setAuthToken();
+  }, []);
   
   return (
     <AuthContext.Provider

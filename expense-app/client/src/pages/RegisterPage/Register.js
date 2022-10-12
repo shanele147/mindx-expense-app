@@ -1,13 +1,12 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../contexts/AuthState/AuthContext";
 import AuthServices from "../../services/authService";
 import SignupForm from "../../components/SignupForm/SignupForm";
 
 const RegisterPage = () => {
   const [signupInProgress, setSignupProgress] = useState(false);
   const [signupError, setSignupError] = useState(null);
-  const { dispatch } = useContext(AuthContext);
+  const [successMess, setSuccessMess] = useState(null);
 
   const navigate = useNavigate();
 
@@ -19,11 +18,17 @@ const RegisterPage = () => {
 
       setTimeout(() => {
         setSignupProgress(false);
+        setSuccessMess(
+          "Register successfully. Please sign in to use this app."
+        );
         navigate("/login");
-      }, 2000);
+      }, 1500);
     } catch (err) {
-      setSignupError(err.response.data.msg);
-      console.log(err);
+      setTimeout(() => {
+        setSignupError(err.response.data);
+        console.log(err);
+        setSignupProgress(false);
+      }, 1000);
     }
   };
 
@@ -32,6 +37,7 @@ const RegisterPage = () => {
       inProgress={signupInProgress}
       onSubmit={onSignupHandler}
       error={signupError}
+      success={successMess}
     />
   );
 };

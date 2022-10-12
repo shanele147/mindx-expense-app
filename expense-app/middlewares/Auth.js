@@ -5,7 +5,7 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 module.exports = (req, res, next) => {
     const token = req.headers[ACESS_TOKEN_KEY];
-    console.log(token);
+    // console.log(token);
     
     if (!token) {
         return res.status(400).json({

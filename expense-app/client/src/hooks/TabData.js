@@ -11,7 +11,7 @@ export const useTabData = () => {
     expenseType,
     incomeList,
     expenseList,
-    transactionList,
+    transactions,
     isSelectedTransaction,
     expenseBasedOnCategory,
     incomeBasedOnCategory,
@@ -28,7 +28,7 @@ export const useTabData = () => {
           id={elm.id}
           onDeleteTransaction={onDeleteTransaction}
           onEditTransaction={onEditTransaction}
-          transactionList={transactionList}
+          transactions={transactions}
         />
       ))
     ) : (
@@ -43,7 +43,7 @@ export const useTabData = () => {
           transaction={elm}
           id={elm.id}
           onDeleteTransaction={onDeleteTransaction}
-          transactionList={transactionList}
+          transactions={transactions}
           onEditTransaction={onEditTransaction}
         />
       ))

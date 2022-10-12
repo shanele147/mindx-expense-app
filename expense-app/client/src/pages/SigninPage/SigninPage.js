@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
-import LoginForm from "../../components/LoginForm/LoginForm.js";
+import SigninForm from "../../components/SigninForm/SigninForm";
 import AuthServices from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthState/AuthContext";
 import { LOGIN } from "../../contexts/type";
 import actionCreator from "../../utils/actionCreator";
 
-import "./LoginPage.css";
+import "./SigninPage.css";
 import PageContainer from "../../components/PageContainer/PageContainer.js";
 
-const LoginPage = (props) => {
+const SigninPage = (props) => {
   const [loginError, setLoginError] = useState(null);
   const [loginInProgress, setLoginProgress] = useState(false);
   const { dispatch } = useContext(AuthContext);
@@ -23,32 +23,27 @@ const LoginPage = (props) => {
       const loginRes = await AuthServices.login(values);
       // loginRes.data contained the information of payload is : token & isAuthenticated
       setTimeout(() => {
+        // console.log(loginRes.data);
         dispatch(actionCreator(LOGIN, loginRes.data));
         setLoginProgress(false);
         navigate("/");
-      }, 1000);
+      }, 1500);
     } catch (err) {
-      setLoginError(err.response.data.msg);
-      console.log(loginError);
-      setLoginProgress(false);
-
-      // set demo for loading after submitting
-      /* setTimeout(() => {
-        console.log(loginError);
+      setTimeout(() => {
+        console.log(err);
+        setLoginError(err.response.data);
         setLoginProgress(false);
-      }, 2000); */
+      }, 1000);
     }
   };
 
   return (
-    // <PageContainer>
-    <LoginForm
+    <SigninForm
       onSubmit={onLoginHandler}
       inProgress={loginInProgress}
       error={loginError}
     />
-    // </PageContainer>
   );
 };
 
-export default LoginPage;
+export default SigninPage;

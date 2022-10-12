@@ -11,7 +11,7 @@ const clientMongoDB = async () => {
     await client.connect();
     console.log("DB connected successfully");
     const dbInstance = client.db(DB_NAME);
-    db.categories = dbInstance.collection("categories");
+    db.appData = dbInstance.collection("expenseData");
     db.users = dbInstance.collection("users");
   } catch (e) {
     console.error(e);

@@ -1,14 +1,11 @@
-import React, {useState} from 'react';
-
-import {
-    Input,
-    Button
-  } from "@material-tailwind/react";
+import React, { useState } from "react";
+import { Input, Button } from "@material-tailwind/react";
 
 import "../../components/TransactionForm/TransactionForm.css";
+import Loading from "../../components/Loading/Loading";
 
 const SignupForm = (props) => {
-  const { onSubmit, inProgress, error } = props;
+  const { onSubmit, inProgress, error, success } = props;
   const [submitValue, setSubmitValue] = useState({
     username: "",
     password: "",
@@ -29,7 +26,6 @@ const SignupForm = (props) => {
     const { name, value } = e.target;
     setSubmitValue({ ...submitValue, [name]: value });
   };
-
 
   return (
     <div className="sm:w-full md:w-1/2 m-auto flex min-h-full h-full items-center justify-center py-20 px-6 md:px-10 lg:px-8 login-form">
@@ -82,24 +78,28 @@ const SignupForm = (props) => {
             onChange={handleInputChange}
             autoComplete="off"
           />
+
           {error && (
             <div style={{ color: "#bd2560", fontSize: "0.95rem" }}>{error}</div>
           )}
 
           <div className="w-full flex flex-row justify-center items-center">
-            <Button
-              className={` mt-12 sm:px-6 md:px-10 lg:px-16 py-3 btn-submit`}
-              type="submit"
-              style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
-            >
-              Register
-            </Button>
-            
+            {inProgress ? (
+              <Loading />
+            ) : (
+              <Button
+                className={` mt-12 sm:px-6 md:px-10 lg:px-16 py-3 btn-submit`}
+                type="submit"
+                style={{ fontSize: "0.85rem", textTransform: "capitalize" }}
+              >
+                Register
+              </Button>
+            )}
           </div>
         </form>
       </div>
     </div>
   );
-}
+};
 
-export default SignupForm
+export default SignupForm;

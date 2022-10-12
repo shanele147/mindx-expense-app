@@ -11,6 +11,9 @@ const AuthServices = {
   },
   register: (userInfo) => {
     return axiosInstance.post("/users", userInfo);
+  },
+  verifyToken: () => {
+    return axiosInstance.get("/");
   }
 };
 

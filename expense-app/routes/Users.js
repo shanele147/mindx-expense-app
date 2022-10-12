@@ -4,11 +4,11 @@ const { db } = require("../config/db");
 const UserController = require("../controllers/UsersController");
 
 router.get("/", async (req, res) => {
-  const users = await db.users.find().toArray();
-  console.log(users);
+  const response = await UserController.GetUsers();
   res.status(200).json({
-    msg: "Get MongoDB users successfully",
-    data: users,
+    msg: "Get users successfully",
+    // data: users,
+    data: response,
   });
 });
 
@@ -24,7 +24,7 @@ router.post("/", async (req, res, next) => {
   try {
     const response = await UserController.Create(user);
     return res.status(201).json({
-      msg: "Create user successfully",
+      msg: "Register successfully",
       data: response,
     });
   } catch (err) {

@@ -1,70 +1,29 @@
-[
-  {
-    "income": {
-      "category": [
-        "Salary",
-        "Awards",
-        "Bonus",
-        "Lottery",
-        "Investment"
-      ],
-      "transaction": [
-        {
-          "id": 1,
-          "date": "2022-08-01",
-          "amount": "1000",
-          "category": "Bonus",
-          "description": "July overtime working",
-          "type": "income",
-          "wallet": "Bank"
-        }
-      ]
-    },
-    "expense": {
-      "category": [
-        "Beverage",
-        "Food",
-        "Shopping",
-        "Pet",
-        "Phone",
-        "Household",
-        "Bills",
-        "Education",
-        "Entertainment",
-        "Health",
-        "Travel",
-        "Transportation",
-        "Others"
-      ],
-      "transaction": [
-        {
-          "id": 2,
-          "date": "2022-08-13",
-          "amount": "400",
-          "category": "Food",
-          "description": "Dinner with friends",
-          "type": "expense",
-          "wallet": "Bank"
-        },
-        {
-          "id": 3,
-          "date": "2022-08-02",
-          "amount": "150",
-          "category": "Shopping",
-          "description": "Weekend super market",
-          "type": "expense",
-          "wallet": "Bank"
-        },
-        {
-          "id": 4,
-          "date": "2022-08-18",
-          "amount": "50",
-          "category": "Food",
-          "description": "Hangout weekend",
-          "type": "expense",
-          "wallet": "Bank"
-        }
-      ]
-    }
-  }
-]
+[{
+  "date": "2022-08-01",
+  "amount": 1000,
+  "category": "Bonus",
+  "description": "July overtime working",
+  "type": "income",
+  "wallet": "Bank"
+},{
+  "date": "2022-08-13",
+  "amount": 400,
+  "category": "Food",
+  "description": "Dinner with friends",
+  "type": "expense",
+  "wallet": "Bank"
+},{
+  "date": "2022-08-02",
+  "amount": 150,
+  "category": "Shopping",
+  "description": "Weekend super market",
+  "type": "expense",
+  "wallet": "Bank"
+},{
+  "date": "2022-08-18",
+  "amount": 50,
+  "category": "Food",
+  "description": "Hangout weekend",
+  "type": "expense",
+  "wallet": "Bank"
+}]
