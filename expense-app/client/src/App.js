@@ -10,7 +10,6 @@ import HomePage from "./pages/HomePage/HomePage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import SigninPage from "./pages/SigninPage/SigninPage";
 import RegisterPage from "./pages/RegisterPage/Register";
-import Loading from "./components/Loading/Loading";
 
 import "./App.css";
 import "./styles/main.scss";
@@ -45,7 +44,7 @@ function App() {
   };
 
   // console.log(loading);
-  
+
   // handle expense tabs open state
   const [open, setOpen] = useState(false);
   const [activeTabIndex, setActiveTabIndex] = useState(0);

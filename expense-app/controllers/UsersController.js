@@ -12,7 +12,7 @@ const Create = async (user) => {
 
   // CREATE HASH PASSWORDS
   const salt = await bcrypt.genSalt(10);
-  console.log(salt);
+  // console.log(salt);
   const hashPassword = await bcrypt.hash(password, salt);
 
   const newUser = {
@@ -23,7 +23,7 @@ const Create = async (user) => {
     createDate: new Date(),
   };
 
-  console.log(newUser);
+  // console.log(newUser);
   // METHODS
   const createdUser = await db.users.insertOne(newUser);
 
@@ -40,11 +40,12 @@ const GetUsers = async () => {
 };
 
 const GetById = async (id) => {
-  const user = await db.users.findOne({"_id": ObjectId(id)});
+  const user = await db.users.findOne({ _id: ObjectId(id) });
   // using destructuring to remove password of user
-  const {password, ...restInfo} = user;
+  const { password, ...restInfo } = user;
   return restInfo;
 };
+
 const Update = (id, payload) => {};
 
 module.exports = {

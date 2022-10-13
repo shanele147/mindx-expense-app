@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input, Button } from "@material-tailwind/react";
 
 import "../../components/TransactionForm/TransactionForm.css";
-import Loading from "../../components/Loading/Loading";
+import SubmitLoading from "../../components/Loading/SubmitLoading";
 
 const SignupForm = (props) => {
   const { onSubmit, inProgress, error, success } = props;
@@ -85,7 +85,7 @@ const SignupForm = (props) => {
 
           <div className="w-full flex flex-row justify-center items-center">
             {inProgress ? (
-              <Loading />
+              <SubmitLoading />
             ) : (
               <Button
                 className={` mt-12 sm:px-6 md:px-10 lg:px-16 py-3 btn-submit`}

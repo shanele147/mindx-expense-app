@@ -3,24 +3,25 @@ import { GET_USER_INFO, LOGIN, LOG_OUT } from "../type";
 
 const authReducer = (state, action) => {
   const { type, payload } = action;
-  const { token, isAuthenticated, user } = payload;
+
+  // console.log({ token, isAuthenticated, user });
   // console.log(payload);
+
   switch (type) {
     case LOGIN: {
-      // console.log({ token, isAuthenticated, user });
+      const { token, isAuthenticated, user } = payload;
+      console.log(payload);
       localStorage.setItem("token", token);
-      localStorage.setItem("user", user);
       return {
         ...state,
-        token: token,
-        isAuthenticated: isAuthenticated,
-        user: user,
+        token,
+        isAuthenticated,
+        user: user.username,
       };
     }
     case LOG_OUT: {
       // console.log("I am in logout function");
       localStorage.removeItem("token");
-      localStorage.removeItem("user");
       return {
         ...state,
         token: null,
@@ -29,12 +30,12 @@ const authReducer = (state, action) => {
       };
     }
     case GET_USER_INFO: {
+      const { user } = payload;
+      // console.log(payload);
       return {
-        ...state, 
-        token: token, 
-        isAuthenticated: isAuthenticated,
-        user: user,
-      }
+        ...state,
+        user: user.username,
+      };
     }
     default:
       return state;

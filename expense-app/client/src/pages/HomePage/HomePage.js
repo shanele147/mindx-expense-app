@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <PageContainer shouldShowFooter={true}>
       {/* this is props.children */}
-      <div className="container mx-auto page-container py-8 px-4 md:pt-28 md:pb-6 md:px-8">
+      <div className="container h-full mx-auto page-container py-8 px-4 md:pt-28 md:pb-6 md:px-8">
         <ExpenseTabs />
       </div>
     </PageContainer>

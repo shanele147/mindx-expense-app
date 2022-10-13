@@ -13,8 +13,8 @@ const AuthServices = {
     return axiosInstance.post("/users", userInfo);
   },
   verifyToken: () => {
-    return axiosInstance.get("/");
-  }
+    return axiosInstance.get("/auth");
+  },
 };
 
 export default AuthServices;

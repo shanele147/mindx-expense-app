@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import AuthContext from "../../contexts/AuthState/AuthContext";
 import Header from "../Header";
-import Loading from "../../components/Loading/Loading";
 
 const PageContainer = ({ children, ...props }) => {
   const { state } = useContext(AuthContext);
@@ -14,7 +13,7 @@ const PageContainer = ({ children, ...props }) => {
   return (
     <div>
       <Header></Header>
-      <main>{children}</main>
+      <main style={{ height: "100vh" }}>{children}</main>
       <footer></footer>
     </div>
   );

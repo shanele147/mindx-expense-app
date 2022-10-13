@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Input, Button } from "@material-tailwind/react";
 import "../../components/TransactionForm/TransactionForm.css";
-import Loading from "../Loading/Loading";
+import SubmitLoading from "../Loading/SubmitLoading";
 
 const LoginForm = (props) => {
   const { onSubmit, inProgress, error } = props;
@@ -63,7 +63,7 @@ const LoginForm = (props) => {
           )}
 
           {inProgress ? (
-            <Loading />
+            <SubmitLoading />
           ) : (
             <div className="w-full flex flex-col gap-8 justify-center items-center text-center">
               <Button

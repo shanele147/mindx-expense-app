@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const JWT_EXPIRED_TIME = process.env.JWT_EXPIRED_TIME;
+const UsersController = require("../controllers/UsersController");
 
 const Login = async ({ username, password }) => {
   const existedUser = await db.users.findOne({ username });
@@ -21,20 +22,22 @@ const Login = async ({ username, password }) => {
         JWT_SECRET_KEY,
         { expiresIn: JWT_EXPIRED_TIME }
       );
+
       console.log(username + " login successfully");
 
+      // RETURN THE USER'S INFO AFTER 1st LOGIN
+      const userInfo = await UsersController.GetById(_id);
       return {
         msg: "Login successfully!",
         token,
         isAuthenticated: true,
-        user: username,
+        user: userInfo,
       };
     }
   }
 
-  throw new Error("Password or username is not correct, please try again.");
+  throw Error("Password or username is not correct, please try again.");
 };
-
 
 module.exports = {
   Login,

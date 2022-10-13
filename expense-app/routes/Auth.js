@@ -4,8 +4,9 @@ const router = express.Router();
 // const jwt = require('jsonwebtoken');
 const AuthController = require("../controllers/AuthController");
 const UsersController = require("../controllers/UsersController");
-const authMdw = require("../middlewares/Auth");
+const authMdw = require("../middlewares/AuthMdw");
 
+// AUTHORIZE THE USER EVERY LOGGING
 router.post("/login", async (req, res, next) => {
   console.log({ body: req.body });
   const { username, password } = req.body;
@@ -24,12 +25,16 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
+// CHECK IF TOKEN IS NOT EXPIRED = RETURN USER'S INFO TO CLIENT SIDE EVERY WEB APP ACTIVATED OR RELOAD
 router.get("/", authMdw, async (req, res, next) => {
   const user = req.user;
   // console.log(user);
   try {
     const userInfo = await UsersController.GetById(user._id);
-    return res.status(200).json(userInfo);
+    return res.status(200).json({
+      msg: "Token is still valid!",
+      user: userInfo,
+    });
   } catch (err) {
     next(err);
   }

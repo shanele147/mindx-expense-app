@@ -24,10 +24,11 @@ const Header = () => {
   const { open, isEdited, balance, handleOpen } = useExpenseContext();
   const { state, dispatch } = useContext(AuthContext);
   const { isAuthenticated, user } = state;
-  // console.log(state);
+  console.log(state);
 
   const onLogoutHandler = () => {
-    dispatch(actionCreator(LOG_OUT, null));
+    dispatch(actionCreator(LOG_OUT));
+    // window.location.href = "./login";
   };
 
   const { openNav, setOpenNav } = useState(false);
