@@ -17,9 +17,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
     "server": "nodemon server.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node server.js"
   },
-  "author": "",
+  "author": "Ngoc Le",
   "license": "ISC",
+  "devDependencies": {},
   "description": ""
 }

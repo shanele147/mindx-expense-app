@@ -29,4 +29,5 @@ const userSchema = new Schema({
   },
 });
 
+// mongoose will detect user to => users in MongoDB
 module.exports = mongoose.model("user", userSchema);

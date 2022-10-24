@@ -15,10 +15,16 @@ const create = (user) => {
   return newUser.save();
 };
 
+const update = async (id) => {};
+
+const remove = (id) => {};
+
 const UserController = {
   getById,
   findOne,
   create,
+  update,
+  remove,
 };
 
 module.exports = UserController;

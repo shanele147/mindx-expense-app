@@ -7,7 +7,8 @@ const router = express.Router();
 router.post("/", async (req, res, next) => {
   const { fullName, password, email } = req.body;
   console.log("Go");
-  // validation
+
+  // Validation
   if (!fullName || !password || !email) {
     return res.status(400).json({
       msg: "Missing required keys",
@@ -16,10 +17,9 @@ router.post("/", async (req, res, next) => {
 
   try {
     const user = await UserController.findOne({ email });
-
     if (user) {
       return res.status(400).json({
-        msg: "User existed",
+        msg: "Email already exist, please try another one!",
       });
     }
     console.log("User:", user);
